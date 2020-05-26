@@ -1,0 +1,123 @@
+# Disable the newline at the start of the prompt
+add_newline = true
+
+prompt_order = [
+    "time",
+    "username",
+    "hostname",
+    "directory",
+    "git_branch",
+    "git_commit",
+    "git_state",
+    "git_status",
+    "python",
+    "conda",
+    "env_var",
+    "cmd_duration",
+    "line_break",
+    "jobs",
+    "character"
+]
+
+# Wait 10 milliseconds for starship to check files under the current directory.
+scan_timeout = 10
+
+[character]
+symbol = "➜"
+vicmd_symbol = ""
+error_symbol = "✗"
+use_symbol_for_status = true
+style_success = "bold green"
+style_failure = "bold red"
+
+[cmd_duration]
+disabled = false
+min_time = 2000
+prefix = "took "
+style = "yellow"
+
+[conda]
+symbol = " "
+style = "dimmed green"
+
+[directory]
+truncation_length = 4
+truncate_to_repo = true
+prefix = "in "
+style = "bold cyan"
+
+[jobs]
+symbol = " "
+threshold = 1
+
+[git_branch]
+symbol = " "
+truncation_length = 4
+truncation_symbol = ""
+
+[git_commit]
+commit_hash_length = 5
+
+[git_state]
+progress_divider = " of "
+cherry_pick = "🍒 PICKING"
+
+[git_status]
+conflicted = ""
+deleted = ""
+ahead = "⇡"
+behind = "⇣"
+staged.value = " "
+staged.style = "green"
+staged_count.enabled = true
+staged_count.style = "green"
+stashed = " "
+modified = " "
+# conflicted = "🏳"
+# ahead = "🏎💨"
+# behind = "😰"
+# diverged = "😵"
+# untracked = "🤷"
+# stashed = "📦"
+# modified = "📝"
+# renamed = "🌗"
+# deleted = "🗑"
+
+[battery]
+full_symbol = ""
+charging_symbol = ""
+discharging_symbol = ""
+
+[memory_usage]
+symbol = " "
+
+[nodejs]
+symbol = " "
+
+[hostname]
+trim_at = ".companyname.com"
+disabled = false
+
+[line_break]
+disabled = false
+
+[python]
+symbol = " "
+pyenv_version_name = true
+pyenv_prefix = "pyenv "
+
+[ruby]
+symbol = " "
+
+[rust]
+symbol = " "
+
+[time]
+disabled = false
+format = "%T"
+
+[username]
+disabled = true
+show_always = false
+style_user = "green"
+style_root = "bold red"

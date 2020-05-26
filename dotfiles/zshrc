@@ -1,0 +1,173 @@
+# Powerlevel10k instant prompt
+if [[ -r "$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# miniconda3
+# export PATH="$HOME/miniconda3/bin:$PATH"  # commented out by conda initialize
+
+# Ruby
+export PATH="/usr/local/opt/ruby/bin:$PATH"
+# Clangd
+export PATH="/usr/local/opt/llvm/bin:$PATH"
+
+### Start of Zinit's installer chunk
+source "$HOME/.zinit/bin/zinit.zsh"
+# autoload -Uz _zinit
+#  (( ${+_comps} )) && _comps[zinit]=_zinit
+
+# ZSH_AUTOSUGGEST
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+ZSH_AUTOSUGGEST_USE_ASYNC=1
+ZSH_AUTOSUGGEST_MANUAL_REBIND=1
+ZSH_AUTOSUGGEST_COMPLETION_IGNORE='( |man |pikaur -S )*'
+
+# forgit
+forgit_add=fga
+forgit_diff=fgd
+forgit_log=fglo
+FORGIT_FZF_DEFAULT_OPTS="--height '80%'"
+
+# fzf_tab
+FZF_TAB_COMMAND=(
+    fzf
+    --ansi   # 启用 ANSI 颜色代码的支持，对于显示分组来说是必需的
+    --border
+    --height 80%
+    --expect='$continuous_trigger' # 连续补全
+    '--color=hl:$(( $#headers == 0 ? 108 : 255 ))'
+    --nth=2,3 --delimiter='\x00'  # 不搜索前缀
+    --layout=reverse
+    --bind alt-p:preview-up,alt-n:preview-down
+    --bind ctrl-u:half-page-up
+    --bind ctrl-d:half-page-down
+    --bind alt-a:select-all,ctrl-r:toggle-all
+    --bind ctrl-s:toggle-sort
+    --tiebreak=begin -m --bind=tab:down,btab:up,change:top,ctrl-space:toggle --cycle
+    '--query=$query'   # $query 将在运行时扩展为查询字符串
+    '--header-lines=$#headers' # $#headers 将在运行时扩展为组标题数目
+)
+zstyle ':fzf-tab:*' command $FZF_TAB_COMMAND
+# 当补全命令的开关时禁用排序
+zstyle ':completion:complete:*:options' sort false
+# 当补全 _zlua 时，使用输入作为查询字符串
+zstyle ':fzf-tab:complete:_zlua:*' query-string input
+# （实验性功能，未来可能更改）
+local extract="
+# 提取输入（当前选择的内容）
+in=\${\${\"\$(<{f})\"%\$'\0'*}#*\$'\0'}
+# 获取当前补全状态的上下文（待补全内容的前面或者后面的东西）
+local -A ctxt=(\"\${(@ps:\2:)CTXT}\")
+"
+# 补全 `kill` 命令时提供命令行参数预览
+zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm,cmd -w -w"
+zstyle ':fzf-tab:complete:kill:argument-rest' extra-opts --preview=$extract'ps --pid=$in[(w)1] -o cmd --no-headers -w -w' --preview-window=down:3:wrap
+# 补全 cd 时使用 exa 预览其中的内容
+zstyle ':fzf-tab:complete:cd:*' extra-opts --preview=$extract'exa -1 --color=always ${~ctxt[hpre]}$in'
+
+# history-search-multi-word
+zstyle :plugin:history-search-multi-word reset-prompt-protect 1
+zstyle ":history-search-multi-word" page-size "8"                      # Number of entries to show (default is $LINES/3)
+zstyle ":history-search-multi-word" highlight-color "fg=yellow,bold"   # Color in which to highlight matched, searched text (default bg=17 on 256-color terminals)
+zstyle ":plugin:history-search-multi-word" synhl "yes"                 # Whether to perform syntax highlighting (default true)
+zstyle ":plugin:history-search-multi-word" active "underline"          # Effect on active history entry. Try: standout, bold, bg=blue (default underline)
+zstyle ":plugin:history-search-multi-word" check-paths "yes"           # Whether to check paths for existence and mark with magenta (default true)
+zstyle ":plugin:history-search-multi-word" clear-on-cancel "no"        # Whether pressing Ctrl-C or ESC should clear entered query
+
+# Zsh-you-should-use
+YSU_MODE=ALL
+# YSU_MODE=BESTMATCH
+YSU_MESSAGE_POSITION="after"
+YSU_MESSAGE_FORMAT="$(tput setaf 1)Hey! I found this %alias_type for %command: %alias$(tput sgr0)"
+
+# Z.lua
+_ZL_ECHO=1  # display new directory name after cd
+_ZL_MATCH_MODE=1  # enhanced matching
+_ZL_ADD_ONCE=1  # only add path if the $PWD is changed
+
+# Vi Mode
+# Mode-sensitive cursor styling
+MODE_CURSOR_VIINS="#00ff00 blinking bar"
+MODE_CURSOR_REPLACE="$MODE_CURSOR_VIINS #ff0000"
+MODE_CURSOR_VICMD="green block"
+MODE_CURSOR_SEARCH="#ff00ff steady underline"
+MODE_CURSOR_VISUAL="$MODE_CURSOR_VICMD steady bar"
+MODE_CURSOR_VLINE="$MODE_CURSOR_VISUAL #00ffff"
+# Mode in prompt
+MODE_INDICATOR_VIINS='%F{15}<%F{8}INSERT<%f'
+MODE_INDICATOR_VICMD='%F{10}<%F{2}NORMAL<%f'
+MODE_INDICATOR_REPLACE='%F{9}<%F{1}REPLACE<%f'
+MODE_INDICATOR_SEARCH='%F{13}<%F{5}SEARCH<%f'
+MODE_INDICATOR_VISUAL='%F{12}<%F{4}VISUAL<%f'
+MODE_INDICATOR_VLINE='%F{12}<%F{4}V-LINE<%f'
+
+# plugins
+zinit light-mode for \
+    skywind3000/z.lua \
+    wfxr/forgit \
+    MichaelAquilina/zsh-you-should-use \
+    softmoth/zsh-vim-mode \
+#     Aloxaf/gencomp \
+
+zinit light-mode for \
+    blockf \
+        zsh-users/zsh-completions \
+        hlissner/zsh-autopair \
+    atclone"dircolors -b LS_COLORS > c.zsh" atpull'%atclone' pick"c.zsh" nocompile'!' \
+        trapd00r/LS_COLORS
+
+# OMZ
+zinit wait lucid for \
+    OMZP::git-extras \
+    OMZP::git
+
+zinit ice mv=":cht.sh -> cht.sh" atclone="chmod +x cht.sh" as="program"
+zinit snippet https://cht.sh/:cht.sh
+
+zinit ice mv=":zsh -> _cht" as="completion"
+zinit snippet https://cheat.sh/:zsh
+
+zinit as="completion" for \
+    esc/conda-zsh-completion \
+
+zinit svn for \
+    OMZ::plugins/pip \
+    OMZ::plugins/extract \
+
+# special plugins
+zpcompinit; zpcdreplay
+
+for config in $XDG_CONFIG_HOME/zsh/*.zsh; do
+    source $config
+done
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+zinit snippet OMZP::colored-man-pages
+
+zinit light-mode for \
+    Aloxaf/fzf-tab \
+    zdharma/fast-syntax-highlighting \
+    zsh-users/zsh-autosuggestions
+
+# Ctrl-R
+# zinit load zdharma/history-search-multi-word
+
+# themes
+: ${THEME:=p10k}
+
+case $THEME in
+    starship)
+        eval "$(starship init zsh)" || logwarn "failed loading starship."
+        ;;
+    p10k)
+        source $XDG_CONFIG_HOME/zsh/themes/p10k.zsh
+        zinit ice depth=1; zinit light romkatv/powerlevel10k
+        ;;
+esac
+
+### End of Zinit's installer chunk
+
+# exec -l fish "$@"
+
+
