@@ -22,6 +22,8 @@ ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
 ZSH_AUTOSUGGEST_USE_ASYNC=1
 ZSH_AUTOSUGGEST_MANUAL_REBIND=1
 ZSH_AUTOSUGGEST_COMPLETION_IGNORE='( |man |pikaur -S )*'
+# "ctrl + →" doing the forward-word, 
+# and "→" getting to the end of prompt line
 
 # forgit
 forgit_add=fga
@@ -129,11 +131,13 @@ zinit ice mv=":zsh -> _cht" as="completion"
 zinit snippet https://cheat.sh/:zsh
 
 zinit as="completion" for \
-    esc/conda-zsh-completion \
+    OMZP::docker/_docker \
+    OMZP::fd/_fd \
+    esc/conda-zsh-completion
 
 zinit svn for \
-    OMZ::plugins/pip \
-    OMZ::plugins/extract \
+    OMZP::pip \
+    OMZP::extract \
 
 # special plugins
 zpcompinit; zpcdreplay
@@ -143,12 +147,13 @@ for config in $XDG_CONFIG_HOME/zsh/*.zsh; do
 done
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-zinit snippet OMZP::colored-man-pages
-
 zinit light-mode for \
     Aloxaf/fzf-tab \
     zdharma/fast-syntax-highlighting \
-    zsh-users/zsh-autosuggestions
+    zsh-users/zsh-autosuggestions \
+    OMZP::colored-man-pages
+
+bindkey '^ ' autosuggest-execute
 
 # Ctrl-R
 # zinit load zdharma/history-search-multi-word
@@ -169,5 +174,3 @@ esac
 ### End of Zinit's installer chunk
 
 # exec -l fish "$@"
-
-

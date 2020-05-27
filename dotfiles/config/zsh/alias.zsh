@@ -50,15 +50,16 @@ alias gdb-peda='gdb -q -ex init-peda' gdb-pwndbg='gdb -q -ex init-pwndbg'
 alias gdb-gef='gdb -q -ex init-gef'   gdb=gdb-pwndbg
 
 # Edit dotfiles
-alias vimrc='vi ~/.config/nvim/init.vim'
-alias vimplug='vi ~/.config/nvim/configs/plugins.vim'
-alias vimmap='vi ~/.config/nvim/configs/mappings.vim'
-alias zshrc='vi ~/.zshrc'
-alias zshenv='vi ~/.zshenv'
-alias szshrc='source ~/.zshrc'
-alias zshalias='vi ~/.config/zsh/alias.zsh'
-alias tmuxconf='vi ~/.tmux.conf'
-alias sshconfig='vi ~/.ssh/config'
+alias vimrc='vi $XDG_CONFIG_HOME/nvim/init.vim'
+alias vimplug='vi $XDG_CONFIG_HOME/nvim/configs/plugins.vim'
+alias vimmap='vi $XDG_CONFIG_HOME/nvim/configs/mappings.vim'
+alias zshrc='vi $HOME/.zshrc'
+alias zshenv='vi $HOME/.zshenv'
+alias szshrc='source $HOME/.zshrc'
+alias zshalias='vi $XDG_CONFIG_HOME/zsh/alias.zsh'
+alias tmuxconf='vi $HOME/.tmux.conf'
+alias sshconfig='vi $HOME/.ssh/config'
+alias gitconfig='vi $HOME/.gitconfig'
 
 # $OMZ:git/git.plugin.zsh
 alias gc='git commit -v'
