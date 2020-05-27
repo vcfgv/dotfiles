@@ -19,8 +19,10 @@ inoremap <C-a> <Home>
 " 删除但不保存到剪切板
 nnoremap x "_x
 nnoremap X "_X
-nnoremap d "_d
-nnoremap dd "_dd
+" nnoremap d "_d
+" nnoremap dd "_dd
+nnoremap c "_c
+nnoremap cc "_cc
 nnoremap D "_D
 vnoremap d "_d
 vnoremap dd "_dd
