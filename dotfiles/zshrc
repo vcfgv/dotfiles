@@ -29,6 +29,8 @@ ZSH_AUTOSUGGEST_COMPLETION_IGNORE='( |man |pikaur -S )*'
 forgit_add=fga
 forgit_diff=fgd
 forgit_log=fglo
+forgit_ignore=fgi
+forgit_stash_show=fgss
 FORGIT_FZF_DEFAULT_OPTS="--height '80%'"
 
 # fzf_tab
