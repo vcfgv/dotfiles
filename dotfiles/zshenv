@@ -93,6 +93,9 @@ function setup_env() {
     # dotdrop
     export DOTDROP_CONFIG="$HOME/Dropbox/my-dotfiles/config.yaml"
 
+    # GPG
+    export GPG_TTY=$(tty)
+
     export _PATH="/usr/local/opt/ncurses/bin:$_PATH"
     export _PATH="/usr/local/opt/gettext/bin:$_PATH"
 
