@@ -45,4 +45,3 @@ set nofoldenable
 " set list listchars=extends:❯,precedes:❮,tab:▸\ ,trail:˽,space:·
 set list
 set listchars=tab:»·,nbsp:+,trail:·,extends:→,precedes:←
-
