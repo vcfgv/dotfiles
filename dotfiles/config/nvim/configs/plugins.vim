@@ -81,7 +81,7 @@ map  <Leader>S <Plug>(easymotion-bd-f)
 nmap <Leader>S <Plug>(easymotion-overwin-f)
 " s{char}{char} to move to {char}{char}
 " nmap s <Plug>(easymotion-s2)
-nmap s <Plug>(easymotion-overwin-f2)
+nmap <Leader>s <Plug>(easymotion-overwin-f2)
 " Move to line
 map <Leader>l <Plug>(easymotion-bd-jk)
 nmap <Leader>l <Plug>(easymotion-overwin-line)
@@ -98,6 +98,18 @@ vmap <c-a-k> <Plug>MoveBlockUp
 nmap <c-a-j> <Plug>MoveLineDown
 nmap <c-a-k> <Plug>MoveLineUp
 " }}} vim-move "
+
+:" *-Improved {{{ "
+Plug 'haya14busa/vim-asterisk'
+map *   <Plug>(asterisk-*)
+map #   <Plug>(asterisk-#)
+map g*  <Plug>(asterisk-g*)
+map g#  <Plug>(asterisk-g#)
+map z*  <Plug>(asterisk-z*)
+map gz* <Plug>(asterisk-gz*)
+map z#  <Plug>(asterisk-z#)
+map gz# <Plug>(asterisk-gz#)
+" }}} *-Improved "
 
 " Start Page {{{ "
 Plug 'mhinz/vim-startify', {'on': 'Startify'}
@@ -240,6 +252,28 @@ imap <Esc> <Plug>(PearTreeFinishExpansion)
 " <Plug>(PearTreeExpandOne)
 " <Plug>(PearTreeJNR)
 Plug 'tpope/vim-surround'
+
+Plug 'machakann/vim-sandwich'
+let g:sandwich_no_default_key_mappings = 1
+let g:operator_sandwich_no_default_key_mappings = 1
+let g:textobj_sandwich_no_default_key_mappings = 1
+nmap <silent> sa <Plug>(operator-sandwich-add)
+xmap <silent> sa <Plug>(operator-sandwich-add)
+omap <silent> sa <Plug>(operator-sandwich-g@)
+nmap <silent> sd <Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)
+xmap <silent> sd <Plug>(operator-sandwich-delete)
+nmap <silent> sr <Plug>(operator-sandwich-replace)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)
+xmap <silent> sr <Plug>(operator-sandwich-replace)
+nmap <silent> sdb <Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-auto-a)
+nmap <silent> srb <Plug>(operator-sandwich-replace)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-auto-a)
+omap ib <Plug>(textobj-sandwich-auto-i)
+xmap ib <Plug>(textobj-sandwich-auto-i)
+omap ab <Plug>(textobj-sandwich-auto-a)
+xmap ab <Plug>(textobj-sandwich-auto-a)
+omap is <Plug>(textobj-sandwich-query-i)
+xmap is <Plug>(textobj-sandwich-query-i)
+omap as <Plug>(textobj-sandwich-query-a)
+xmap as <Plug>(textobj-sandwich-query-a)
 " }}} auto-pair "
 
 " cheat.sh {{{ "
