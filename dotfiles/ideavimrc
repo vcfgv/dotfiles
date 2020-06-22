@@ -1,6 +1,7 @@
 set easymotion
 set multiple-cursors
 set commentary
+set surround
 
 source $XDG_CONFIG_HOME/nvim/configs/base.vim
 source $XDG_CONFIG_HOME/nvim/configs/mappings.vim
