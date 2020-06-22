@@ -120,6 +120,7 @@ zinit light-mode for \
     wfxr/forgit \
     MichaelAquilina/zsh-you-should-use \
     softmoth/zsh-vim-mode \
+    olets/zsh-abbr
 #     Aloxaf/gencomp \
 
 zinit light-mode for \

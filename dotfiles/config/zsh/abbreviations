@@ -1,0 +1,80 @@
+
+abbr ..='\cd ..'
+abbr ...='\cd ../..'
+abbr ....='\cd ../../..'
+abbr .....='\cd ../../../..'
+abbr cd.='\cd ..'
+abbr cd..='\cd ..'
+
+abbr vv='vi $(fzf)'
+abbr cht="cht.sh"
+
+abbr ll='ls -lgbh --git'
+abbr lg='ll -G'    # List by grid
+abbr llg='ll -G'
+abbr la='ls -a'
+abbr lla='ll -a'
+abbr lag='llg -a'
+abbr ldot='ll -d .*'
+abbr lss='ll -s size'
+abbr lst='ll -s modified'
+abbr lt='ls --tree'
+
+abbr rm='rm -iv'
+abbr mv='mv -iv'
+abbr rd='rmdir'
+abbr md='mkdir -v -p'
+abbr df='df -h'
+abbr dus='du -sh'
+
+# z.lua
+abbr zz='z -c'      # restrict matches to subdirs of $PWD
+abbr zi='z -i'      # cd with interactive selection
+abbr zf='z -I'      # use fzf to select in multiple matches
+abbr zb='z -b'      # quickly cd to the parent directory
+
+# $OMZ:git/git.plugin.zsh
+abbr gc='git commit -v'
+abbr gb='git branch'
+abbr gl='git pull'
+abbr gp='git push'
+abbr gpom='git push origin master'
+abbr gpoat='git push origin --all && git push origin --tags'
+abbr gpu='git push upstream'
+abbr gco='git checkout'
+abbr gst='git status'
+abbr gs='git stash'
+abbr gsp='git stash pop'
+
+# Docker
+abbr dps='docker ps'
+abbr dpsa='dps -a'
+abbr drun='docker run'
+abbr drm='docker rm'
+abbr drmi='docker rmi'
+abbr da='docker attach'
+abbr dim='docker images'
+abbr dp='docker pull'
+abbr dstop='docker stop'
+abbr dstart='docker start'
+abbr dexec='docker exec'
+abbr ds='docker service'
+abbr dm='docker-machine'
+
+# TMUX
+abbr ta='tmux attach -t'
+abbr tad='tmux attach -d -t'
+abbr ts='tmux new-session -s'
+abbr tl='tmux list-sessions'
+abbr tksv='tmux kill-server'
+abbr tkss='tmux kill-session -t'
+
+# Brew
+abbr brewp='brew pin'
+abbr brews='brew list -1'
+abbr brewsp='brew list --pinned'
+abbr bubo='brew update && brew outdated'
+abbr bubc='brew upgrade && brew cleanup'
+abbr bubu='bubo && bubc'
+abbr bcubo='brew update && brew cask outdated'
+abbr bcubc='brew cask reinstall $(brew cask outdated) && brew cleanup'
