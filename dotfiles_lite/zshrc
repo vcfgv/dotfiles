@@ -1,0 +1,157 @@
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+source "$HOME/.zinit/bin/zinit.zsh"
+HISTSIZE=1000
+SAVEHIST=1000
+HISTFILE=~/.zsh_history
+setopt appendhistory
+
+[ -d  "$HOME/miniconda3/bin" ] && export PATH="$HOME/miniconda3/bin:$PATH"  # commented out by conda initialize
+[ -d  "$HOME/anaconda3/bin" ] && export PATH="$HOME/anaconda3/bin:$PATH"  # commented out by conda initialize
+# Rust
+export PATH="$HOME/.cargo/bin:$PATH"
+export CARGO_HOME="$HOME/.cargo"
+
+alias ..='\cd ..'
+alias ...='\cd ../..'
+alias ....='\cd ../../..'
+alias .....='\cd ../../../..'
+alias cd.='\cd ..'
+alias cd..='\cd ..'
+alias ls='ls --color=auto'
+alias ll='ls --group-directories-first -l'
+alias la='ls --group-directories-first -l --all'
+alias l='ll'
+if (( $+commands[exa] )); then
+    alias ls='exa --icons'
+    alias ll='ls -lgbh --git'
+    alias lg='ll -G'    # List by grid
+    alias llg='ll -G'
+    alias la='ls -a'
+    alias lla='ll -a'
+    alias lag='llg -a'
+    alias ldot='ll -d .*'
+    alias lss='ll -s size'
+    alias lst='ll -s modified'
+    alias lt='ls --tree'
+fi
+# alias cl='cd ..;ls'
+function chpwd() {
+  ls
+}
+
+alias pssh=parallel-ssh
+alias pscp=parallel-scp
+alias prsync=parallel-rsync
+alias pnuke=parallel-nuke
+alias pslurp=parallel-slurp
+
+alias rm='rm -iv'
+alias mv='mv -iv'
+alias rd='rmdir'
+alias md='mkdir -v -p'
+if (( $+commands[nvim] )); then
+    alias vi="nvim"
+    alias vim="nvim"
+fi
+# Z.lua
+_ZL_ECHO=1  # display new directory name after cd
+_ZL_MATCH_MODE=1  # enhanced matching
+_ZL_ADD_ONCE=1  # only add path if the $PWD is changed
+
+# ZSH_AUTOSUGGEST
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+ZSH_AUTOSUGGEST_USE_ASYNC=1
+ZSH_AUTOSUGGEST_MANUAL_REBIND=1
+ZSH_AUTOSUGGEST_COMPLETION_IGNORE='( |man |pikaur -S )*'
+
+# history-search-multi-word
+zstyle :plugin:history-search-multi-word reset-prompt-protect 1
+zstyle ":history-search-multi-word" page-size "8"                      # Number of entries to show (default is $LINES/3)
+zstyle ":history-search-multi-word" highlight-color "fg=yellow,bold"   # Color in which to highlight matched, searched text (default bg=17 on 256-color terminals)
+zstyle ":plugin:history-search-multi-word" synhl "yes"                 # Whether to perform syntax highlighting (default true)
+zstyle ":plugin:history-search-multi-word" active "underline"          # Effect on active history entry. Try: standout, bold, bg=blue (default underline)
+zstyle ":plugin:history-search-multi-word" check-paths "yes"           # Whether to check paths for existence and mark with magenta (default true)
+zstyle ":plugin:history-search-multi-word" clear-on-cancel "no"        # Whether pressing Ctrl-C or ESC should clear entered query
+
+# fzf_tab
+FZF_TAB_COMMAND=(
+    fzf
+    --ansi   # 启用 ANSI 颜色代码的支持，对于显示分组来说是必需的
+    --border
+    --height 80%
+    --expect='$continuous_trigger' # 连续补全
+    '--color=hl:$(( $#headers == 0 ? 108 : 255 ))'
+    --nth=2,3 --delimiter='\x00'  # 不搜索前缀
+    --layout=reverse
+    --bind alt-p:preview-up,alt-n:preview-down
+    --bind ctrl-u:half-page-up
+    --bind ctrl-d:half-page-down
+    --bind alt-a:select-all,ctrl-r:toggle-all
+    --bind ctrl-s:toggle-sort
+    --tiebreak=begin -m --bind=tab:down,btab:up,change:top,ctrl-space:toggle --cycle
+    '--query=$query'   # $query 将在运行时扩展为查询字符串
+    '--header-lines=$#headers' # $#headers 将在运行时扩展为组标题数目
+)
+zstyle ':fzf-tab:*' command $FZF_TAB_COMMAND
+# 当补全命令的开关时禁用排序
+zstyle ':completion:complete:*:options' sort false
+# 当补全 _zlua 时，使用输入作为查询字符串
+zstyle ':fzf-tab:complete:_zlua:*' query-string input
+# （实验性功能，未来可能更改）
+local extract="
+# 提取输入（当前选择的内容）
+in=\${\${\"\$(<{f})\"%\$'\0'*}#*\$'\0'}
+# 获取当前补全状态的上下文（待补全内容的前面或者后面的东西）
+local -A ctxt=(\"\${(@ps:\2:)CTXT}\")
+"
+# 补全 `kill` 命令时提供命令行参数预览
+zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm,cmd -w -w"
+zstyle ':fzf-tab:complete:kill:argument-rest' extra-opts --preview=$extract'ps --pid=$in[(w)1] -o cmd --no-headers -w -w' --preview-window=down:3:wrap
+# 补全 cd 时使用 exa 预览其中的内容
+zstyle ':fzf-tab:complete:cd:*' extra-opts --preview=$extract'exa -1 --color=always ${~ctxt[hpre]}$in'
+
+zinit as="completion" for \
+    esc/conda-zsh-completion
+
+zinit ice as"completion"
+zinit snippet https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/docker/_docker
+
+zinit light-mode for \
+    MichaelAquilina/zsh-you-should-use \
+    softmoth/zsh-vim-mode \
+    skywind3000/z.lua
+
+zinit light-mode for \
+    blockf \
+        zsh-users/zsh-completions \
+        hlissner/zsh-autopair \
+
+zinit svn for \
+    OMZP::pip \
+    OMZP::extract \
+
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# special plugins
+zpcompinit; zpcdreplay
+
+source $HOME/.completion.zsh
+source $HOME/.fzf.configs.zsh
+
+
+zinit light-mode for \
+    Aloxaf/fzf-tab \
+    zsh-users/zsh-autosuggestions \
+    OMZP::colored-man-pages \
+    zdharma/fast-syntax-highlighting \
+
+bindkey '^ ' autosuggest-execute
+
+# zinit load zdharma/history-search-multi-word
+
+zinit ice depth=1; zinit light romkatv/powerlevel10k
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
