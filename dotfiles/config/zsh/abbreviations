@@ -6,7 +6,6 @@ abbr .....='\cd ../../../..'
 abbr cd.='\cd ..'
 abbr cd..='\cd ..'
 
-abbr vv='vi $(fzf)'
 abbr cht="cht.sh"
 
 abbr ll='ls -lgbh --git'
@@ -78,3 +77,4 @@ abbr bubc='brew upgrade && brew cleanup'
 abbr bubu='bubo && bubc'
 abbr bcubo='brew update && brew cask outdated'
 abbr bcubc='brew cask reinstall $(brew cask outdated) && brew cleanup'
+abbr bcua='brew cu -a'
