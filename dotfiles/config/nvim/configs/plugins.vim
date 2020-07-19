@@ -331,6 +331,18 @@ nmap <Leader>gp :git push<CR>
 nmap <Leader>gl :GitLogAll<CR>
 nmap <Leader>gr :GitBranch<CR>
 
+Plug 'rhysd/git-messenger.vim'
+nmap <Leader>gm <Plug>(git-messenger)
+hi gitmessengerPopupNormal term=None guifg=#eeeeee guibg=#333333 ctermfg=255 ctermbg=234
+hi gitmessengerHeader term=None guifg=#88b8f6 ctermfg=111
+hi gitmessengerHash term=None guifg=#f0eaaa ctermfg=229
+hi gitmessengerHistory term=None guifg=#fd8489 ctermfg=210
+function! s:setup_git_messenger_popup() abort
+    nmap <buffer><C-o> o
+    nmap <buffer><C-i> O
+endfunction
+autocmd FileType gitmessengerpopup call <SID>s:setup_git_messenger_popup()
+
 " show vcs symbol on the left side
 Plug 'mhinz/vim-signify'
 let g:signify_vcs_list               = ['git', 'svn']
@@ -931,7 +943,7 @@ Plug 'ludovicchabant/vim-gutentags'
 " let g:gutentags_trace = 1
 let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
 let g:gutentags_ctags_tagfile = '.tags'
-let g:gutentags_exclude_filetypes = [ 'defx', 'denite', 'vista', 'magit' ]
+let g:gutentags_exclude_filetypes = [ 'defx', 'denite', 'vista', 'magit', 'log']
 let g:gutentags_generate_on_write = 1
 let g:gutentags_generate_on_missing = 1
 let g:gutentags_generate_on_new = 0
