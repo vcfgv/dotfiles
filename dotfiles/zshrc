@@ -48,7 +48,9 @@ FZF_TAB_COMMAND=(
     --bind ctrl-d:half-page-down
     --bind alt-a:select-all,ctrl-r:toggle-all
     --bind ctrl-s:toggle-sort
-    --tiebreak=begin -m --bind=tab:down,btab:up,change:top,ctrl-space:toggle --cycle
+    --tiebreak=begin
+    --multi
+    --cycle
     '--query=$query'   # $query 将在运行时扩展为查询字符串
     '--header-lines=$#headers' # $#headers 将在运行时扩展为组标题数目
 )

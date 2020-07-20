@@ -48,6 +48,7 @@ FZF_DEFAULT_OPTS="
 --ansi
 --reverse
 --cycle
+--multi
 --bind ctrl-space:toggle,pgup:preview-up,pgdn:preview-down
 --bind alt-p:preview-up,alt-n:preview-down
 --bind ctrl-u:half-page-up
