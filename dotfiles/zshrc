@@ -102,8 +102,8 @@ zinit light-mode for \
     skywind3000/z.lua \
     wfxr/forgit \
     MichaelAquilina/zsh-you-should-use \
-    olets/zsh-abbr \
     softmoth/zsh-vim-mode \
+#     olets/zsh-abbr \
 #     Aloxaf/gencomp \
 
 zinit light-mode for \

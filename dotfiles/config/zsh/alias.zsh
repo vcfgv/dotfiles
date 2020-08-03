@@ -71,7 +71,7 @@ alias gpoat='git push origin --all && git push origin --tags'
 alias gpu='git push upstream'
 alias gco='git checkout'
 alias gst='git status'
-alias gs='git stash'
+# alias gs='git stash'
 alias gsp='git stash pop'
 
 # Docker

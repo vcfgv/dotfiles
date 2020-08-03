@@ -1,10 +1,10 @@
 
-abbr ..='\cd ..'
-abbr ...='\cd ../..'
-abbr ....='\cd ../../..'
-abbr .....='\cd ../../../..'
-abbr cd.='\cd ..'
-abbr cd..='\cd ..'
+abbr ..='cd ..'
+abbr ...='cd ../..'
+abbr ....='cd ../../..'
+abbr .....='cd ../../../..'
+abbr cd.='cd ..'
+abbr cd..='cd ..'
 
 abbr cht="cht.sh"
 
@@ -42,7 +42,7 @@ abbr gpoat='git push origin --all && git push origin --tags'
 abbr gpu='git push upstream'
 abbr gco='git checkout'
 abbr gst='git status'
-abbr gs='git stash'
+# abbr gs='git stash'
 abbr gsp='git stash pop'
 
 # Docker
