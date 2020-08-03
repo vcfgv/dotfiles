@@ -61,6 +61,7 @@ FZF_DEFAULT_OPTS="
 --bind change:top
 --preview \"($FZF_FILE_HIGHLIGHTER {} || $FZF_DIR_HIGHLIGHTER {}) 2>/dev/null | head -200\"
 --preview-window right:50%:hidden
+--print-query
 "
 export FZF_DEFAULT_OPTS
 
