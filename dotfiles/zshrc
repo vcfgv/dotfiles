@@ -17,13 +17,15 @@ source "$HOME/.zinit/bin/zinit.zsh"
 #  (( ${+_comps} )) && _comps[zinit]=_zinit
 
 # ZSH_AUTOSUGGEST
+# "ctrl + →" doing the forward-word, and "→" getting to the end of prompt line
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
 ZSH_AUTOSUGGEST_USE_ASYNC=1
 ZSH_AUTOSUGGEST_MANUAL_REBIND=1
 ZSH_AUTOSUGGEST_COMPLETION_IGNORE='( |man |pikaur -S )*'
-# "ctrl + →" doing the forward-word, 
-# and "→" getting to the end of prompt line
+# Don't show suggestions after abbreviations
+ZSH_AUTOSUGGEST_HISTORY_IGNORE=${(j:|:)${(k)ABBR_REGULAR_USER_ABBREVIATIONS}}
+ZSH_AUTOSUGGEST_COMPLETION_IGNORE=${ZSH_AUTOSUGGEST_HISTORY_IGNORE}
 
 # forgit
 forgit_add=fga
@@ -123,7 +125,7 @@ zinit light-mode for \
     wfxr/forgit \
     MichaelAquilina/zsh-you-should-use \
     softmoth/zsh-vim-mode \
-#     olets/zsh-abbr \
+    olets/zsh-abbr \
 #     Aloxaf/gencomp \
 
 zinit light-mode for \

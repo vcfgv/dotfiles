@@ -62,7 +62,7 @@ function setup_env() {
     export CARGO_HOME="$HOME/.cargo"
 
     # Homebrew Bottles中科大源
-    export HOMEBREW_BOTTLE_DOMAIN="https://mirrors.ustc.edu.cn/homebrew-bottles"
+#     export HOMEBREW_BOTTLE_DOMAIN="https://mirrors.ustc.edu.cn/homebrew-bottles"
 
     ## LS_COLOR
     # coreutils
@@ -103,42 +103,30 @@ function setup_env() {
 }
 
 setup_history() {
-    # 限制单条历史记录长度
-    # return 1: will not be saved
-    # reutnr 2: saved on the internal history list
-    autoload -Uz add-zsh-hook
-    add-zsh-hook zshaddhistory max_history_len
-    function max_history_len() {
-        if (($#1 > 160)) {
-            return 2
-        }
-    return 0
-    }
-
-    export HISTFILE="$ZDOTDIR/.zsh_history" # History file
-    export HISTSIZE=100000                  # History size in memory
-    export SAVEHIST=1000000                 # The number of histsize
-    export LISTMAX=50                       # The size of asking history
-
-    # 首先移除重复历史
-    setopt HIST_EXPIRE_DUPS_FIRST
-    # 忽略重复
-    setopt HIST_IGNORE_DUPS
-    # 更佳性能
-    setopt HIST_FCNTL_LOCK
-    # 记录时间戳
-    # setopt EXTENDED_HISTORY              # Write the history file in the ":start:elapsed;command" format.
-    # 按执行顺序添加历史
-    setopt INC_APPEND_HISTORY            # Write to the history file immediately, not when the shell exits.
-    # 忽略空格开头的命令
-    setopt HIST_IGNORE_SPACE             # Do not record an entry starting with a space.
-    setopt HIST_REDUCE_BLANKS            # Remove superfluous blanks before recording entry.
-    # 展开历史时不执行
-    setopt HIST_VERIFY                   # Do not execute immediately upon history expansion.
-    setopt HIST_BEEP                     # Beep when accessing nonexistent history.
-    # Do not add in root
-    [[ "$UID" == 0 ]] && unset HISTFILE && SAVEHIST=0
+#     export HISTFILE="$ZDOTDIR/.zsh_history" # History file
+#     export HISTSIZE=100000                  # History size in memory
+#     export SAVEHIST=1000000                 # The number of histsize
+#     export LISTMAX=50                       # The size of asking history
+# 
+#     # 首先移除重复历史
+#     setopt HIST_EXPIRE_DUPS_FIRST
+#     # 忽略重复
+#     setopt HIST_IGNORE_DUPS
+#     # 更佳性能
+#     setopt HIST_FCNTL_LOCK
+#     # 记录时间戳
+#     # setopt EXTENDED_HISTORY              # Write the history file in the ":start:elapsed;command" format.
+#     # 按执行顺序添加历史
+#     setopt INC_APPEND_HISTORY            # Write to the history file immediately, not when the shell exits.
+#     # 忽略空格开头的命令
+#     setopt HIST_IGNORE_SPACE             # Do not record an entry starting with a space.
+#     setopt HIST_REDUCE_BLANKS            # Remove superfluous blanks before recording entry.
+#     # 展开历史时不执行
+#     setopt HIST_VERIFY                   # Do not execute immediately upon history expansion.
+#     setopt HIST_BEEP                     # Beep when accessing nonexistent history.
+#     # Do not add in root
+#     [[ "$UID" == 0 ]] && unset HISTFILE && SAVEHIST=0
 }
 
 setup_env; unset -f setup_env
-setup_history; unset -f setup_history
+# setup_history; unset -f setup_history
