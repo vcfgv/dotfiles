@@ -1554,6 +1554,8 @@ let g:gruvbox_material_menu_selection_background = 'green'
 Plug 'joshdick/onedark.vim'
 Plug 'colepeters/spacemacs-theme.vim'
 Plug 'liuchengxu/space-vim-theme'
+Plug 'connorholyday/vim-snazzy'
+let g:SnazzyTransparent = 0.8
 " }}} ColorScheme "
 
 call plug#end()
