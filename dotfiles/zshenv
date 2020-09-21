@@ -46,10 +46,10 @@ function setup_env() {
     export fpath=($fpath $CUSTOM_FPATH)
 
     # brew completions
-    # if type brew &>/dev/null; then
-    #     export BREW_FPATH="$(brew --prefix)/share/zsh/site-functions"
-    #     export fpath=($BREW_FPATH $fpath)
-    # fi
+    if type brew &>/dev/null; then
+        export BREW_FPATH="$(brew --prefix)/share/zsh/site-functions"
+        export fpath=($BREW_FPATH $fpath)
+    fi
 
     # Language
     export LANGUAGE="en_US.UTF-8"
