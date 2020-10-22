@@ -1,39 +1,36 @@
 # Disable the newline at the start of the prompt
 add_newline = true
 
-prompt_order = [
-    "time",
-    "username",
-    "hostname",
-    "directory",
-    "git_branch",
-    "git_commit",
-    "git_state",
-    "git_status",
-    "python",
-    "conda",
-    "env_var",
-    "cmd_duration",
-    "line_break",
-    "jobs",
-    "character"
-]
+format = """\
+    $time\
+    $username\
+    $hostname\
+    $directory\
+    $git_branch\
+    $git_commit\
+    $git_state\
+    $git_status\
+    $python\
+    $conda\
+    $env_var\
+    $cmd_duration\
+    $line_break\
+    $jobs\
+    $character\
+    """
 
 # Wait 10 milliseconds for starship to check files under the current directory.
 scan_timeout = 10
 
 [character]
-symbol = "➜"
-vicmd_symbol = ""
-error_symbol = "✗"
-use_symbol_for_status = true
-style_success = "bold green"
-style_failure = "bold red"
+success_symbol = "[➜](bold green)"
+error_symbol = "[✗](bold red)"
+vicmd_symbol = "[](bold green)"
 
 [cmd_duration]
 disabled = false
 min_time = 2000
-prefix = "took "
+format = "took [$duration]($style)"
 style = "yellow"
 
 [conda]
@@ -43,7 +40,7 @@ style = "dimmed green"
 [directory]
 truncation_length = 4
 truncate_to_repo = true
-prefix = "in "
+format = "[$path]($style)[$read_only]($read_only_style) "
 style = "bold cyan"
 
 [jobs]
@@ -113,8 +110,8 @@ symbol = " "
 symbol = " "
 
 [time]
-disabled = false
-format = "%T"
+time_format = "%T"
+format = "at [$time]($style) "
 
 [username]
 disabled = true
