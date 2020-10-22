@@ -165,6 +165,7 @@ for config in $XDG_CONFIG_HOME/zsh/*.zsh; do
     source $config
 done
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f ~/.iterm2_shell_integration.zsh ] && source ~/.iterm2_shell_integration.zsh
 
 zinit light-mode for \
     Aloxaf/fzf-tab \
