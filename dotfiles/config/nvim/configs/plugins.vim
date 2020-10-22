@@ -523,12 +523,17 @@ let g:ale_linters = {
       \ 'javascript': ['eslint'],
       \ }
 
+let g:ale_fixers = {
+\   'javascript': ['prettier'],
+\   'css': ['prettier'],
+\}
 let g:ale_lint_on_insert_leave = 1
 let g:ale_completion_enabled = 1
 let g:ale_completion_delay = 500
 let g:ale_fix_on_save = 1
 let g:ale_echo_delay = 20
 let g:ale_lint_delay = 500
+let g:ale_linters_explicit = 1
 
 let g:ale_sign_error = '⤫'
 let g:ale_sign_warning = '⚠'
@@ -1100,6 +1105,9 @@ Plug 'sheerun/vim-polyglot'
 let g:polyglot_disabled = ['latex', 'markdown', 'c', 'cpp']
 
 " tabular plugin is used to format tables
+Plug 'vim-pandoc/vim-pandoc',             {'for': 'markdown'}
+Plug 'vim-pandoc/vim-pandoc-syntax',      {'for': 'markdown'}
+Plug 'mityu/vim-applescript',             {'for': 'applescript'}
 " Plug 'ekalinin/Dockerfile.vim',           { 'for': ['dockerfile', 'docker-compose'] }
 " Plug 'andrewstuart/vim-kubernetes',     { 'for': 'yaml'       }
 " Plug 'vim-scripts/awk.vim',             { 'for': 'awk'        }
@@ -1305,6 +1313,56 @@ function RToc()
     let lnum=line('.')
     execute lstart.",".lnum."g/           /d"
 endfunction
+
+" Prettier
+" coc-prettier
+command! -nargs=0 Prettier :CocCommand prettier.formatFile
+" Prettier range format only support languageId including:
+" javascript, javascriptreact, typescript, typescriptreact, json and graphql.
+
+" Plug 'prettier/vim-prettier', {
+"  \ 'do': 'npm install',
+"  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
+
+" Max line length that prettier will wrap on: a number or 'auto' (use
+" textwidth).
+" default: 'auto'
+let g:prettier#config#print_width = 'auto'
+
+" number of spaces per indentation level: a number or 'auto' (use
+" softtabstop)
+" default: 'auto'
+let g:prettier#config#tab_width = 'auto'
+
+" use tabs instead of spaces: true, false, or auto (use the expandtab setting).
+" default: 'auto'
+let g:prettier#config#use_tabs = 'auto'
+
+" flow|babylon|typescript|css|less|scss|json|graphql|markdown or empty string
+" (let prettier choose).
+" default: ''
+let g:prettier#config#parser = 'babylon'
+
+" cli-override|file-override|prefer-file
+" default: 'file-override'
+let g:prettier#config#config_precedence = 'file-override'
+
+" always|never|preserve
+" default: 'preserve'
+let g:prettier#config#prose_wrap = 'preserve'
+
+" css|strict|ignore
+" default: 'css'
+let g:prettier#config#html_whitespace_sensitivity = 'css'
+
+" false|true
+" default: 'false'
+let g:prettier#config#require_pragma = 'false'
+
+" Define the flavor of line endings
+" lf|crlf|cr|all
+" defaut: 'lf'
+let g:prettier#config#end_of_line = get(g:, 'prettier#config#end_of_line', 'lf')
 
 Plug '907th/vim-auto-save', {'for': 'markdown'}
 let g:auto_save = 0
