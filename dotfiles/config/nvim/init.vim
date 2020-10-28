@@ -47,7 +47,7 @@ endif
 if has('syntax')
   syntax on
   set background=dark
-  colorscheme sonokai
+  colorscheme edge
 endif
 
 " history : how many lines of history VIM has to remember

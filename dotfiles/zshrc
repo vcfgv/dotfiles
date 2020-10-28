@@ -134,7 +134,7 @@ zinit light-mode for \
     blockf \
         zsh-users/zsh-completions \
         hlissner/zsh-autopair \
-    atclone="dircolors -b LS_COLORS > c.zsh" atpull='%atclone' pick='c.zsh' \
+    atclone="dircolors -b LS_COLORS > c.zsh" atpull='%atclone' pick='c.zsh' nocompile'!' \
         trapd00r/LS_COLORS
 
 # OMZ
@@ -143,8 +143,8 @@ zinit wait lucid for \
     OMZP::git \
     OMZL::clipboard.zsh
 
-zinit ice mv=":cht.sh -> cht.sh" atclone="chmod +x cht.sh" as="program"
-zinit snippet https://cht.sh/:cht.sh
+# zinit ice mv=":cht.sh -> cht.sh" atclone="chmod +x cht.sh" as="program"
+# zinit snippet https://cht.sh/:cht.sh
 
 zinit ice mv=":zsh -> _cht" as="completion"
 zinit snippet https://cheat.sh/:zsh
