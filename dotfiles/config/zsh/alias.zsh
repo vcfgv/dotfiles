@@ -3,9 +3,9 @@ alias vim="/Applications/MacVim.app/Contents/MacOS/Vim"
 alias vv='vi $(fzf)'
 alias cht="cht.sh"
 
-alias ls='ls --color=auto'
-alias ll='ls --group-directories-first -l'
-alias la='ls --group-directories-first -l --all'
+alias ls='ls -G --color=auto'
+alias ll='ls -G --group-directories-first -l'
+alias la='ls -G --group-directories-first -l --all'
 alias l='ll'
 if (( $+commands[exa] )); then
     alias ls='exa --icons'

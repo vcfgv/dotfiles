@@ -1,3 +1,12 @@
+# LS_COLORS
+# https://github.com/sharkdp/vivid
+if (( $+commands[vivid] )); then
+    export LS_COLORS="$(vivid generate molokai)"
+    # https://the.exa.website/docs/colour-themes#colour-codes
+    (( $+commands[exa] )) && export EXA_COLORS="$(vivid --color-mode 8-bit generate molokai)"
+fi
+
+
 # combine z & cd
 function j() {
     if [[ "$argv[1]" == "-"* ]]; then
