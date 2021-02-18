@@ -1,14 +1,24 @@
+WORDCHARS=''
+
 unsetopt menu_complete   # do not autoselect the first completion entry
 unsetopt flowcontrol
 setopt auto_menu         # show completion menu on succesive tab press
 setopt complete_in_word
 setopt always_to_end
+# 禁用旧补全系统
+zstyle ':completion:*' use-compctl false
 
-zmodload -i zsh/complist
+compctl() {
+    print -P "\n%F{red}Don't use compctl anymore%f"
+}
 
-zstyle ':completion:*:complete:*' use-cache 1
-
-zstyle ':completion:*:default' menu select
+# 缓存补全结果
+zstyle ':completion:*:complete:*' use-cache true
+zstyle ':completion:*:complete:*' cache-policy _aloxaf_caching_policy
+_aloxaf_caching_policy() {
+    # 缓存策略：若不存在或 14 天以前则认定为失效
+    [[ ! -f $1 && -n "$1"(Nm+14) ]]
+}
 
 # 补全顺序:
 # _complete - 普通补全函数  _extensions - 通过 *.\t 选择扩展名
@@ -25,53 +35,30 @@ zstyle -e ':completion:*' completer '
   fi'
 
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-# bindkey -M menuselect '^o' accept-and-infer-next-history
 
-# case-insensitive (all),partial-word and then substring completion
-if [ "x$CASE_SENSITIVE" = "xtrue" ]; then
-  zstyle ':completion:*' matcher-list 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
-  unset CASE_SENSITIVE
-else
-  zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
-fi
+# 增强版文件名补全
+# 0 - 完全匹配 ( Abc -> Abc )      1 - 大写修正 ( abc -> Abc )
+# 2 - 单词补全 ( f-b -> foo-bar )  3 - 后缀补全 ( .cxx -> foo.cxx )
+zstyle ':completion:*:(argument-rest|files):*' matcher-list '' \
+    'm:{[:lower:]-}={[:upper:]_}' \
+    'r:|[.,_-]=* r:|=*' \
+    'r:|.=* r:|=*' \
+    'm:{a-zA-Z-_}={A-Za-z_-}' 'r:|=*' 'l:|=* r:|=*' \
 
 # 不展开普通别名
 zstyle ':completion:*' regular false
 
 # disable named-directories autocompletion
 zstyle ':completion:*:cd:*' tag-order local-directories directory-stack path-directories
-
 zstyle ':completion:*' users off
 
 # 补全当前用户所有进程列表
 zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm,cmd -w -w"
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
 
-# Don't complete uninteresting users
-zstyle ':completion:*:*:*:users' ignored-patterns \
-        adm amanda apache avahi beaglidx bin cacti canna clamav daemon \
-        dbus distcache dovecot fax ftp games gdm gkrellmd gopher \
-        hacluster haldaemon halt hsqldb ident junkbust ldap lp mail \
-        mailman mailnull mldonkey mysql nagios \
-        named netdump news nfsnobody nobody nscd ntp nut nx openvpn \
-        operator pcap postfix postgres privoxy pulse pvm quagga radvd \
-        rpc rpcuser rpm shutdown squid sshd sync uucp vcsa xfs
-
 # ... unless we really want to.
 zstyle '*' single-ignored show
 
-# ssh
-h=()
-if [[ -r ~/.ssh/config ]]; then
-  h=($h ${${${(@M)${(f)"$(cat ~/.ssh/config)"}:#Host *}#Host }:#*[*?]*})
-fi
-if [[ -r ~/.ssh/known_hosts ]]; then
-  h=($h ${${${(f)"$(cat ~/.ssh/known_hosts{,2} || true)"}%%\ *}%%,*}) 2>/dev/null
-fi
-if [[ $#h -gt 0 ]]; then
-  zstyle ':completion:*:ssh:*' hosts $h
-  zstyle ':completion:*:slogin:*' hosts $h
-fi
 
 if [ "x$COMPLETION_WAITING_DOTS" = "xtrue" ]; then
   expand-or-complete-with-dots() {
@@ -87,9 +74,6 @@ fi
 zstyle ':completion:*:manuals'    separate-sections true
 zstyle ':completion:*:manuals.*'  insert-sections   true
 
-# 补全第三方 Git 子命令
-zstyle ':completion:*:*:git:*' user-commands ${${(M)${(k)commands}:#git-*}/git-/}
-
 # 结果样式
 zstyle ':completion:*' menu yes select search
 zstyle ':completion:*' list-grouped false
@@ -101,3 +85,16 @@ zstyle ':completion:*:warnings' format '%F{red}%B-- No match for: %d --%b%f'
 zstyle ':completion:*:messages' format '%d'
 zstyle ':completion:*:corrections' format '%B%d (errors: %e)%b'
 zstyle ':completion:*:descriptions' format '[%d]'
+
+# ssh
+h=()
+if [[ -r ~/.ssh/config ]]; then
+  h=($h ${${${(@M)${(f)"$(cat ~/.ssh/config)"}:#Host *}#Host }:#*[*?]*})
+fi
+if [[ -r ~/.ssh/known_hosts ]]; then
+  h=($h ${${${(f)"$(cat ~/.ssh/known_hosts{,2} || true)"}%%\ *}%%,*}) 2>/dev/null
+fi
+if [[ $#h -gt 0 ]]; then
+  zstyle ':completion:*:ssh:*' hosts $h
+  zstyle ':completion:*:slogin:*' hosts $h
+fi

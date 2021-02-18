@@ -35,32 +35,8 @@ forgit_ignore=fgi
 forgit_stash_show=fgss
 FORGIT_FZF_DEFAULT_OPTS="--height '80%'"
 
-# fzf_tab
-# (deprecated configurations)
-# FZF_TAB_COMMAND=(
-#     fzf
-#     --ansi   # Enable ANSI color support, necessary for showing groups
-#     --border
-#     --height 80%
-#     --expect='$continuous_trigger,$print_query' # For continuous completion and print query
-#     '--color=hl:$(( $#headers == 0 ? 108 : 255 ))'
-#     --nth=2,3 --delimiter='\x00'  # Don't search prefix
-#     --layout=reverse
-#     --bind alt-p:preview-up,alt-n:preview-down
-#     --bind ctrl-u:half-page-up
-#     --bind ctrl-d:half-page-down
-#     --bind alt-a:select-all,ctrl-r:toggle-all
-#     --bind ctrl-s:toggle-sort
-#     --tiebreak=begin
-#     --multi
-#     --cycle
-#     '--query=$query'   # $query will be expanded to query string at runtime.
-#     '--header-lines=$#headers' # $#headers will be expanded to lines of headers at runtime
-#     --print-query
-# )
-# zstyle ':fzf-tab:*' command $FZF_TAB_COMMAND
+# fzf-tab
 zstyle ':fzf-tab:*' fzf-command fzf
-
 local extract="
 # trim input
 local in=\${\${\"\$(<{f})\"%\$'\0'*}#*\$'\0'}
@@ -74,7 +50,8 @@ realpath=\${(Qe)~realpath}
 zstyle ':completion:complete:*:options' sort false
 zstyle ':fzf-tab:complete:_zlua:*' query-string input
 zstyle ':completion:*:descriptions' format '[%d]'
-zstyle ':fzf-tab:*' show-group brief
+zstyle ':fzf-tab:*' show-group full
+# zstyle ':fzf-tab:*' show-group brief
 zstyle ':fzf-tab:*' continuous-trigger '/'
 zstyle ':fzf-tab:*' print-query alt-enter
 zstyle ':fzf-tab:*' ignore false
@@ -91,6 +68,9 @@ zstyle ":completion:*:git-checkout:*" sort false
 zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm,cmd -w -w"
 zstyle ':fzf-tab:complete:(kill|ps):argument-rest' fzf-preview '[[ $group == "[process ID]" ]] && ps --pid=$word -o cmd --no-headers -w -w'
 zstyle ':fzf-tab:complete:(kill|ps):argument-rest' fzf-flags --preview-window=down:3:wrap
+zstyle ':completion:*:exa' file-sort modification
+zstyle ':completion:*:exa' sort false
+zstyle ":fzf-tab:complete:cd:*" query-string
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa --icons --color=always -TL2 $realpath'
 # zstyle ':fzf-tab:complete:cd:*' fzf-flags --preview-window=right:50%:nohidden
 
@@ -143,6 +123,10 @@ zinit wait lucid for \
     OMZP::git \
     OMZL::clipboard.zsh
 
+# remove Git completion provided by Homebrew
+[ -e /usr/local/share/zsh/site-functions/git-completion.bash ] && rm /usr/local/share/zsh/site-functions/git-completion.bash
+[ -e /usr/local/share/zsh/site-functions/_git ] && rm /usr/local/share/zsh/site-functions/_git
+
 # zinit ice mv=":cht.sh -> cht.sh" atclone="chmod +x cht.sh" as="program"
 # zinit snippet https://cht.sh/:cht.sh
 
@@ -152,9 +136,10 @@ zinit snippet https://cheat.sh/:zsh
 zinit as="completion" for \
     OMZP::docker/_docker \
     OMZP::fd/_fd \
-    OMZP::cargo/_cargo \
-    OMZP::rust/_rust \
     esc/conda-zsh-completion
+#     lukechilds/zsh-better-npm-completion \
+#     OMZP::cargo/_cargo \
+#         OMZP::rust/_rust \
 
 zinit svn for \
     OMZP::pip \

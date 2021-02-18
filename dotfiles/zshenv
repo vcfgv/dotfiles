@@ -41,15 +41,19 @@ function setup_env() {
     # export ZDOTDIR=$XDG_CONFIG_HOME/zsh
 
     # Custom zsh completions path
-    export GENCOMP_DIR=$XDG_CONFIG_HOME/zsh/completions
-    export CUSTOM_FPATH="$XDG_CONFIG_HOME/zsh/completions"
-    export fpath=($fpath $CUSTOM_FPATH)
+#     export GENCOMP_DIR=$XDG_CONFIG_HOME/zsh/completions
+#     export CUSTOM_FPATH="$XDG_CONFIG_HOME/zsh/completions"
+#     export fpath=($fpath $CUSTOM_FPATH)
 
     # brew completions
-    if type brew &>/dev/null; then
-        export BREW_FPATH="$(brew --prefix)/share/zsh/site-functions"
-        export fpath=($BREW_FPATH $fpath)
-    fi
+#     if type brew &>/dev/null; then
+#         export BREW_FPATH="$(brew --prefix)/share/zsh/site-functions"
+#         export fpath=($BREW_FPATH $fpath)
+#     fi
+
+    # Homebrew Bottles中科大源
+    # export HOMEBREW_BOTTLE_DOMAIN="https://mirrors.ustc.edu.cn/homebrew-bottles"
+    # export HOMEBREW_NO_AUTO_UPDATE=true
 
     # Language
     export LANGUAGE="en_US.UTF-8"
@@ -58,12 +62,9 @@ function setup_env() {
     export LC_CTYPE="${LANGUAGE}"
 
     # Rust
-    _PATH="$HOME/.cargo/bin:$_PATH"
-    export CARGO_HOME="$HOME/.cargo"
+    # _PATH="$HOME/.cargo/bin:$_PATH"
+    # export CARGO_HOME="$HOME/.cargo"
 
-    # Homebrew Bottles中科大源
-    # export HOMEBREW_BOTTLE_DOMAIN="https://mirrors.ustc.edu.cn/homebrew-bottles"
-    # export HOMEBREW_NO_AUTO_UPDATE=true
 
     ## LS_COLOR
     # coreutils
