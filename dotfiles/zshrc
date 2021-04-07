@@ -32,51 +32,11 @@ forgit_add=fga
 forgit_diff=fgd
 forgit_log=fglo
 forgit_ignore=fgi
-forgit_stash_show=fgss
 FORGIT_FZF_DEFAULT_OPTS="--height '80%'"
-
-# fzf-tab
-zstyle ':fzf-tab:*' fzf-command fzf
-local extract="
-# trim input
-local in=\${\${\"\$(<{f})\"%\$'\0'*}#*\$'\0'}
-# get ctxt for current completion
-local -A ctxt=(\"\${(@ps:\2:)CTXT}\")
-# real path
-local realpath=\${ctxt[IPREFIX]}\${ctxt[hpre]}\$in
-realpath=\${(Qe)~realpath}
-"
-# disable sort when completing options of any command
-zstyle ':completion:complete:*:options' sort false
-zstyle ':fzf-tab:complete:_zlua:*' query-string input
-zstyle ':completion:*:descriptions' format '[%d]'
-zstyle ':fzf-tab:*' show-group full
-# zstyle ':fzf-tab:*' show-group brief
-zstyle ':fzf-tab:*' continuous-trigger '/'
-zstyle ':fzf-tab:*' print-query alt-enter
-zstyle ':fzf-tab:*' ignore false
-zstyle ':fzf-tab:*' single-group color header
-FZF_TAB_GROUP_COLORS=(
-    $'\033[94m' $'\033[32m' $'\033[33m' $'\033[35m' $'\033[31m' $'\033[38;5;27m' $'\033[36m' \
-    $'\033[38;5;100m' $'\033[38;5;98m' $'\033[91m' $'\033[38;5;80m' $'\033[92m' \
-    $'\033[38;5;214m' $'\033[38;5;165m' $'\033[38;5;124m' $'\033[38;5;120m'
-)
-zstyle ':fzf-tab:*' group-colors $FZF_TAB_GROUP_COLORS
-zstyle ':fzf-tab:*' fzf-flags --bind tab:toggle-out,shift-tab:toggle-in --height 80%
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-zstyle ":completion:*:git-checkout:*" sort false
-zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm,cmd -w -w"
-zstyle ':fzf-tab:complete:(kill|ps):argument-rest' fzf-preview '[[ $group == "[process ID]" ]] && ps --pid=$word -o cmd --no-headers -w -w'
-zstyle ':fzf-tab:complete:(kill|ps):argument-rest' fzf-flags --preview-window=down:3:wrap
-zstyle ':completion:*:exa' file-sort modification
-zstyle ':completion:*:exa' sort false
-zstyle ":fzf-tab:complete:cd:*" query-string
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa --icons --color=always -TL2 $realpath'
-# zstyle ':fzf-tab:complete:cd:*' fzf-flags --preview-window=right:50%:nohidden
+forgit_stash_show=fgss
 
 # Zsh-you-should-use
-YSU_MODE=ALL
-# YSU_MODE=BESTMATCH
+YSU_MODE=ALL  # or BESTMATCH
 YSU_MESSAGE_POSITION="after"
 YSU_MESSAGE_FORMAT="$(tput setaf 1)Hey! I found this %alias_type for %command: %alias$(tput sgr0)"
 
@@ -137,9 +97,6 @@ zinit as="completion" for \
     OMZP::docker/_docker \
     OMZP::fd/_fd \
     esc/conda-zsh-completion
-#     lukechilds/zsh-better-npm-completion \
-#     OMZP::cargo/_cargo \
-#         OMZP::rust/_rust \
 
 zinit svn for \
     OMZP::pip \

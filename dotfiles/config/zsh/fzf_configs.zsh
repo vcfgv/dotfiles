@@ -43,7 +43,7 @@ FZF_DEFAULT_OPTS="
 --reverse
 --tiebreak=begin
 --delimiter='\x00'
---pointer '➤ '
+--pointer '➤'
 --marker '>'
 --prompt '❯ '
 --color=fg:-1,bg:-1,hl:#ffaf5f,fg+:-1,bg+:-1,hl+:#ffaf5f
@@ -106,3 +106,36 @@ FZF_ALT_C_OPTS="
 --preview-window=right:50%
 "
 export FZF_ALT_C_OPTS
+
+#######################################################################
+#                             FZF_TAB                                 #
+#######################################################################
+zstyle ':fzf-tab:*' fzf-command fzf
+# disable sort when completing options of any command
+zstyle ':completion:complete:*:options' sort false
+zstyle ':fzf-tab:complete:_zlua:*' query-string input
+zstyle ':completion:*:descriptions' format '[%d]'
+zstyle ':fzf-tab:*' show-group full
+# zstyle ':fzf-tab:*' show-group brief
+zstyle ':fzf-tab:*' continuous-trigger '/'
+zstyle ':fzf-tab:*' print-query alt-enter
+zstyle ':fzf-tab:*' ignore false
+zstyle ':fzf-tab:*' single-group color header
+export FZF_TAB_GROUP_COLORS=(
+$'\033[94m' $'\033[32m' $'\033[33m' $'\033[35m' $'\033[31m' $'\033[38;5;27m' $'\033[36m' \
+  $'\033[38;5;100m' $'\033[38;5;98m' $'\033[91m' $'\033[38;5;80m' $'\033[92m' \
+  $'\033[38;5;214m' $'\033[38;5;165m' $'\033[38;5;124m' $'\033[38;5;120m'
+)
+zstyle ':fzf-tab:*' group-colors $FZF_TAB_GROUP_COLORS
+zstyle ':fzf-tab:*' fzf-flags --bind tab:toggle-out,shift-tab:toggle-in --height 80%
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ":completion:*:git-checkout:*" sort false
+zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm,cmd -w -w"
+zstyle ':fzf-tab:complete:(kill|ps):argument-rest' fzf-preview '[[ $group == "[process ID]" ]] && ps --pid=$word -o cmd --no-headers -w -w'
+zstyle ':fzf-tab:complete:(kill|ps):argument-rest' fzf-flags --preview-window=down:3:wrap
+zstyle ':completion:*:exa' file-sort modification
+zstyle ':completion:*:exa' sort false
+zstyle ":fzf-tab:complete:cd:*" query-string
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa --icons --color=always -TL2 $realpath'
+zstyle ':fzf-tab:complete:cd:*' popup-pad 30 0
+# zstyle ':fzf-tab:complete:cd:*' fzf-flags --preview-window=right:50%:nohidden
