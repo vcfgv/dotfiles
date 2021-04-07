@@ -1,3 +1,4 @@
+#!/usr/bin/env zsh
 alias vim="/Applications/MacVim.app/Contents/MacOS/Vim"
 (( $+commands[nvim] )) && alias vi="nvim"
 alias vv='vi $(fzf)'

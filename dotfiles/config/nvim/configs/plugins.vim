@@ -2,19 +2,22 @@ call plug#begin('~/.vim/plugged')
 
 " tpope/vim-sensible {{{ "
 if !has('nvim')
-    Plug 'tpope/vim-sensible' " no nead for nvim
+    Plug 'tpope/vim-sensible' " no need for nvim
 endif
 " }}} tpope/vim-sensible "
 
 " StartUpTime {{{ "
-Plug 'tweekmonster/startuptime.vim'
+" Plug 'tweekmonster/startuptime.vim'
 " }}} StartUpTime "
 
 " BufOnly {{{ "
-Plug 'vim-scripts/BufOnly.vim'
+" Delete all the buffers except the current buffer.
+" Plug 'vim-scripts/BufOnly.vim'
+Plug 'schickling/vim-bufonly'
 " }}} BufOnly "
 
 " incsearch {{{ "
+" incrementally highlights ALL pattern matches unlike default 'incsearch'.
 Plug 'haya14busa/incsearch.vim'
 let g:incsearch#auto_nohlsearch = 1
 map /  <Plug>(incsearch-forward)
@@ -27,7 +30,7 @@ map g* <Plug>(incsearch-nohl-g*)
 map g# <Plug>(incsearch-nohl-g#)
 " doesn't move the cursor
 map g/ <Plug>(incsearch-stay)
-
+" This plugin highlights patterns and ranges for Ex commands in Command-line mode.
 Plug 'markonm/traces.vim'
 " }}} incsearch "
 
@@ -41,10 +44,10 @@ Plug 'ConradIrwin/vim-bracketed-paste'
 
 " Select in visual {{{ "
 Plug 'terryma/vim-expand-region'
-" map + <Plug>(expand_region_expand)
-" map _ <Plug>(expand_region_shrink)
-vmap v <Plug>(expand_region_expand)
-vmap V <Plug>(expand_region_shrink)
+map + <Plug>(expand_region_expand)
+map _ <Plug>(expand_region_shrink)
+" vmap J <Plug>(expand_region_expand)
+" vmap K <Plug>(expand_region_shrink)
 " }}} Select in visual "
 
 " Cursor {{{ "
@@ -64,6 +67,8 @@ Plug 'jeffkreeftmeijer/vim-numbertoggle'
 " }}} numbertoggle "
 
 " Quick Motion Search {{{ "
+" You can specify any mapping for Sneak (see :help sneak). 
+" By the way: cl is equivalent to s, and cc is equivalent to S.
 Plug 'justinmk/vim-sneak'
 " Replacing f & t
 map f <Plug>Sneak_f
@@ -112,7 +117,7 @@ map gz# <Plug>(asterisk-gz#)
 " }}} *-Improved "
 
 " Start Page {{{ "
-Plug 'mhinz/vim-startify', {'on': 'Startify'}
+" Plug 'mhinz/vim-startify', {'on': 'Startify'}
 nmap <c-t> :Startify<CR>
 let g:startify_lists = [
  \ { 'type': 'files',     'header': ['   MRU']            },
@@ -154,6 +159,10 @@ let g:startify_custom_footer = [
       \ '|                                           |',
       \ '+-------------------------------------------+',
       \ ]
+Plug 'glepnir/dashboard-nvim'
+let g:dashboard_default_executive ='clap'
+nmap <Leader>ss :<C-u>SessionSave<CR>
+nmap <Leader>sl :<C-u>SessionLoad<CR>
 " }}} Start Page "
 
 " Rainbow parentheses {{{
@@ -209,14 +218,6 @@ nnoremap <silent> <localleader> :<c-u>WhichKey ','<CR>
 " }}} WhichKey "
 
 " auto-pair {{{ "
-" Conflict with multi_cursor
-" Plug 'jiangmiao/auto-pairs'
-" let g:autopairsmultilineclose = 0
-" let g:autopairsshortcuttoggle = ''
-" let g:autopairsshortcutjump = ''
-" let g:autopairsshortcutfastwrap = ''
-" let g:autopairsshortcutbackinsert = ''
-
 Plug 'tmsvg/pear-tree'
 " Default rules for matching:
 let g:pear_tree_pairs = {
@@ -242,7 +243,7 @@ let g:pear_tree_map_special_keys = 1
 " Default mappings:
 imap <BS> <Plug>(PearTreeBackspace)
 imap <CR> <Plug>(PearTreeExpand)
-imap <Esc> <Plug>(PearTreeFinishExpansion)
+" imap <Esc> <Plug>(PearTreeFinishExpansion)
 " Pear Tree also makes <Plug> mappings for each opening and closing string.
 "     :help <Plug>(PearTreeOpener)
 "     :help <Plug>(PearTreeCloser)
@@ -253,27 +254,28 @@ imap <Esc> <Plug>(PearTreeFinishExpansion)
 " <Plug>(PearTreeJNR)
 Plug 'tpope/vim-surround'
 
+" sandwich.vim is a set of operator and textobject plugins to add/delete/replace surroundings of a sandwiched textobject, like (foo).
 " Plug 'machakann/vim-sandwich'
-let g:sandwich_no_default_key_mappings = 1
-let g:operator_sandwich_no_default_key_mappings = 1
-let g:textobj_sandwich_no_default_key_mappings = 1
-nmap <silent> sa <Plug>(operator-sandwich-add)
-xmap <silent> sa <Plug>(operator-sandwich-add)
-omap <silent> sa <Plug>(operator-sandwich-g@)
-nmap <silent> sd <Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)
-xmap <silent> sd <Plug>(operator-sandwich-delete)
-nmap <silent> sr <Plug>(operator-sandwich-replace)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)
-xmap <silent> sr <Plug>(operator-sandwich-replace)
-nmap <silent> sdb <Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-auto-a)
-nmap <silent> srb <Plug>(operator-sandwich-replace)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-auto-a)
-omap ib <Plug>(textobj-sandwich-auto-i)
-xmap ib <Plug>(textobj-sandwich-auto-i)
-omap ab <Plug>(textobj-sandwich-auto-a)
-xmap ab <Plug>(textobj-sandwich-auto-a)
-omap is <Plug>(textobj-sandwich-query-i)
-xmap is <Plug>(textobj-sandwich-query-i)
-omap as <Plug>(textobj-sandwich-query-a)
-xmap as <Plug>(textobj-sandwich-query-a)
+" let g:sandwich_no_default_key_mappings = 1
+" let g:operator_sandwich_no_default_key_mappings = 1
+" let g:textobj_sandwich_no_default_key_mappings = 1
+" nmap <silent> sa <Plug>(operator-sandwich-add)
+" xmap <silent> sa <Plug>(operator-sandwich-add)
+" omap <silent> sa <Plug>(operator-sandwich-g@)
+" nmap <silent> sd <Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)
+" xmap <silent> sd <Plug>(operator-sandwich-delete)
+" nmap <silent> sr <Plug>(operator-sandwich-replace)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)
+" xmap <silent> sr <Plug>(operator-sandwich-replace)
+" nmap <silent> sdb <Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-auto-a)
+" nmap <silent> srb <Plug>(operator-sandwich-replace)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-auto-a)
+" omap ib <Plug>(textobj-sandwich-auto-i)
+" xmap ib <Plug>(textobj-sandwich-auto-i)
+" omap ab <Plug>(textobj-sandwich-auto-a)
+" xmap ab <Plug>(textobj-sandwich-auto-a)
+" omap is <Plug>(textobj-sandwich-query-i)
+" xmap is <Plug>(textobj-sandwich-query-i)
+" omap as <Plug>(textobj-sandwich-query-a)
+" xmap as <Plug>(textobj-sandwich-query-a)
 " }}} auto-pair "
 
 " cheat.sh {{{ "
@@ -359,18 +361,6 @@ Plug 'chrisbra/vim-diff-enhanced'
 let g:signify_vcs_cmds = {
       \ 'git': 'git diff --no-color --diff-algorithm=histogram --no-ext-diff -U0 -- %f',
       \}
-
-" Replaced by faster vim-signify
-" Plug 'airblade/vim-gitgutter'
-" let g:gitgutter_map_keys = 0
-" let g:gitgutter_enabled = 0
-" let g:gitgutter_highlight_lines = 1
-" let g:gitgutter_sign_added='┃'
-" let g:gitgutter_sign_modified='┃'
-" let g:gitgutter_sign_removed='◢'
-" let g:gitgutter_sign_removed_first_line='◥'
-" let g:gitgutter_sign_modified_removed='◢'
-" nnoremap <leader>gs :GitGutterToggle<CR>
 " }}} Git "
 
 " fzf {{{ "
@@ -891,7 +881,6 @@ endfunction
 
 " vim-devicons {{{ "
 Plug 'ryanoasis/vim-devicons'
-
 " }}} vim-devicons "
 
 " sbdchd/neoformat {{{ "
@@ -944,16 +933,6 @@ xmap <leader>ga <Plug>(LiveEasyAlign)
 
 " comfortable-motion {{{ "
 Plug 'psliwka/vim-smoothie'
-" Plug 'yuttie/comfortable-motion.vim'
-" let g:comfortable_motion_no_default_key_mappings = 1
-" let g:comfortable_motion_scroll_down_key         = "j"
-" let g:comfortable_motion_scroll_up_key           = "k"
-" nnoremap <silent> <c-d> :call comfortable_motion#flick(100)<cr>
-" nnoremap <silent> <c-u> :call comfortable_motion#flick(-100)<cr>
-" nnoremap <silent> <c-f> :call comfortable_motion#flick(200)<cr>
-" nnoremap <silent> <c-b> :call comfortable_motion#flick(-200)<cr>
-" noremap <silent> <scrollwheeldown> :call comfortable_motion#flick(40)<cr>
-" noremap <silent> <scrollwheelup>   :call comfortable_motion#flick(-40)<cr>
 " }}} comfortable-motion "
 
 " splitjoin {{{ "
@@ -1065,10 +1044,10 @@ let g:clap_current_selection_sign= {
       \ "linehl": "ClapCurrentSelection"
       \ }
 let g:clap_open_action = {
-       \  'ctrl-t': 'tab split',
-       \  'ctrl-x': 'split',
-       \  'ctrl-v': 'vsplit'
-       \  }
+      \  'ctrl-t': 'tab split',
+      \  'ctrl-x': 'split',
+      \  'ctrl-v': 'vsplit'
+      \  }
 let g:clap_provider_alias = {'hist:': 'command_history'}
 let g:clap_provider_grep_enable_icon = 1
 let g:clap_prompt_format = '%spinner%%forerunner_status% %provider_id%: '
@@ -1121,7 +1100,7 @@ nnoremap   <silent>   <F10>   :FloatermToggle<CR>
 " Set floaterm window's background to black
 hi FloatermNF guibg=black
 " Set floating window border line color to cyan, and background to orange
-hi FloatermBorder guibg=none guifg=cyan
+hi FloatermBorder guibg=orange guifg=cyan
 
 autocmd User Startified setlocal buflisted
 " }}} floaterm "
@@ -1135,20 +1114,20 @@ let g:polyglot_disabled = ['latex', 'markdown', 'c', 'cpp']
 Plug 'vim-pandoc/vim-pandoc',             {'for': 'markdown'}
 Plug 'vim-pandoc/vim-pandoc-syntax',      {'for': 'markdown'}
 Plug 'mityu/vim-applescript',             {'for': 'applescript'}
-" Plug 'ekalinin/Dockerfile.vim',           { 'for': ['dockerfile', 'docker-compose'] }
+Plug 'ekalinin/Dockerfile.vim',           { 'for': ['dockerfile', 'docker-compose'] }
 " Plug 'andrewstuart/vim-kubernetes',     { 'for': 'yaml'       }
 " Plug 'vim-scripts/awk.vim',             { 'for': 'awk'        }
 " Plug 'nelstrom/vim-textobj-rubyblock',  { 'for': 'ruby'       }
 Plug 'tmux-plugins/vim-tmux',            { 'for': 'tmux'       }
 " Plug 'octol/vim-cpp-enhanced-highlight', { 'for': ['cpp', 'c'] }
 Plug 'bfrg/vim-cpp-modern', { 'for': ['c', 'cpp']}
-" Plug 'ap/vim-css-color',                { 'for': 'css'        }
+Plug 'ap/vim-css-color',                { 'for': 'css'        }
 " Plug 'moll/vim-node',                   { 'for': 'node'       }
 " Plug 'mattn/emmet-vim',                 { 'for': 'html'       }
 " Plug 'othree/xml.vim',                  { 'for': 'xml'        }
 Plug 'elzr/vim-json',                    { 'for': 'json'       }
 Plug 'cespare/vim-toml',                 { 'for': 'toml'       }
-" Plug 'pangloss/vim-javascript',         { 'for': 'javascript' }
+Plug 'pangloss/vim-javascript',         { 'for': 'javascript' }
 " Plug 'martinda/Jenkinsfile-vim-syntax', { 'for': 'jenkins'    }
 " Plug 'udalov/kotlin-vim',               { 'for': 'kotlin'     }
 " Plug 'vim-ruby/vim-ruby',               { 'for': 'ruby'       }
@@ -1629,13 +1608,6 @@ let g:edge_disable_italic_comment = 0
 Plug 'sainnhe/sonokai'
 let g:sonokai_style = 'andromeda'
 let g:sonokai_enable_italic = 1
-Plug 'sainnhe/gruvbox-material'
-" available values: 'hard', 'medium'(default), 'soft'
-let g:gruvbox_material_background = 'soft'
-let g:gruvbox_material_palette = 'mix'
-let g:gruvbox_material_enable_italic = 1
-let g:gruvbox_material_disable_italic_comment = 1
-let g:gruvbox_material_menu_selection_background = 'green'
 Plug 'joshdick/onedark.vim'
 Plug 'colepeters/spacemacs-theme.vim'
 Plug 'liuchengxu/space-vim-theme'
