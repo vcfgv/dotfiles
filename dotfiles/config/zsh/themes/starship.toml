@@ -1,24 +1,6 @@
 # Disable the newline at the start of the prompt
 add_newline = true
 
-format = """\
-    $time\
-    $username\
-    $hostname\
-    $directory\
-    $git_branch\
-    $git_commit\
-    $git_state\
-    $git_status\
-    $python\
-    $conda\
-    $env_var\
-    $cmd_duration\
-    $line_break\
-    $jobs\
-    $character\
-    """
-
 # Wait 10 milliseconds for starship to check files under the current directory.
 scan_timeout = 10
 
@@ -32,10 +14,6 @@ disabled = false
 min_time = 2000
 format = "took [$duration]($style)"
 style = "yellow"
-
-[conda]
-symbol = " "
-style = "dimmed green"
 
 [directory]
 truncation_length = 4
@@ -70,15 +48,6 @@ staged_count.enabled = true
 staged_count.style = "green"
 stashed = ""
 modified = ""
-# conflicted = "🏳"
-# ahead = "🏎💨"
-# behind = "😰"
-# diverged = "😵"
-# untracked = "🤷"
-# stashed = "📦"
-# modified = "📝"
-# renamed = "🌗"
-# deleted = "🗑"
 
 [battery]
 full_symbol = ""
@@ -87,6 +56,9 @@ discharging_symbol = ""
 
 [memory_usage]
 symbol = " "
+
+[docker]
+symbol = " "
 
 [nodejs]
 symbol = " "
@@ -107,7 +79,7 @@ pyenv_prefix = "pyenv "
 symbol = " "
 
 [rust]
-symbol = " "
+symbol = " "
 
 [time]
 time_format = "%T"
