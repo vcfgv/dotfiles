@@ -3,13 +3,11 @@ if [[ -r "$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "$XDG_CACHE_HOME/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# miniconda3
-# export PATH="$HOME/miniconda3/bin:$PATH"  # commented out by conda initialize
-
-# Ruby
-export PATH="/usr/local/opt/ruby/bin:$PATH"
-# Clangd
-export PATH="/usr/local/opt/llvm/bin:$PATH"
+# NVM
+export NVM_DIR="$HOME/.config/nvm"
+export NVM_COMPLETION=true
+export NVM_LAZY_LOAD=true
+export NVM_LAZY_LOAD_EXTRA_COMMANDS=('nvim')
 
 ### Start of Zinit's installer chunk
 source "$HOME/.zinit/bin/zinit.zsh"
@@ -47,6 +45,7 @@ _ZL_ADD_ONCE=1  # only add path if the $PWD is changed
 
 # Vi Mode
 # Mode-sensitive cursor styling
+# The recognized style words are steady, blinking, block, underline and bar.
 MODE_CURSOR_VIINS="#00ff00 blinking bar"
 MODE_CURSOR_REPLACE="$MODE_CURSOR_VIINS #ff0000"
 MODE_CURSOR_VICMD="green block"
@@ -63,31 +62,37 @@ MODE_INDICATOR_VLINE='%F{12}<%F{4}V-LINE<%f'
 
 # plugins
 zinit light-mode for \
-    skywind3000/z.lua \
-    wfxr/forgit \
-    MichaelAquilina/zsh-you-should-use \
-    softmoth/zsh-vim-mode \
     olets/zsh-abbr \
-#     Aloxaf/gencomp \
+    skywind3000/z.lua \
+    softmoth/zsh-vim-mode
+#     agkozak/zsh-z \
+
+zinit wait="2" lucid light-mode for \
+    MichaelAquilina/zsh-you-should-use \
+    hlissner/zsh-autopair \
+    wfxr/forgit \
+    lukechilds/zsh-nvm # This load nvm on first use of node, npm, etc
+#     Aloxaf/gencomp
 
 zinit light-mode for \
     blockf \
         zsh-users/zsh-completions \
-        hlissner/zsh-autopair \
     atclone="dircolors -b LS_COLORS > c.zsh" atpull='%atclone' pick='c.zsh' nocompile'!' \
         trapd00r/LS_COLORS
 
 # OMZ
-zinit wait lucid for \
+zinit wait="2" lucid for \
     OMZP::git-extras \
     OMZP::git \
+    OMZP::sudo \
+    OMZP::systemd \
     OMZL::clipboard.zsh
 
 # remove Git completion provided by Homebrew
 [ -e /usr/local/share/zsh/site-functions/git-completion.bash ] && rm /usr/local/share/zsh/site-functions/git-completion.bash
 [ -e /usr/local/share/zsh/site-functions/_git ] && rm /usr/local/share/zsh/site-functions/_git
 
-# zinit ice mv=":cht.sh -> cht.sh" atclone="chmod +x cht.sh" as="program"
+# zinit ice as"program" mv"*cht.sh -> cht.sh" pick"cht.sh"
 # zinit snippet https://cht.sh/:cht.sh
 
 zinit ice mv=":zsh -> _cht" as="completion"
@@ -108,13 +113,14 @@ zpcompinit; zpcdreplay
 for config in $XDG_CONFIG_HOME/zsh/*.zsh; do
     source $config
 done
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f ~/.iterm2_shell_integration.zsh ] && source ~/.iterm2_shell_integration.zsh
 
 zinit light-mode for \
     Aloxaf/fzf-tab \
-    zdharma/fast-syntax-highlighting \
     zsh-users/zsh-autosuggestions \
+    zdharma/fast-syntax-highlighting \
     OMZP::colored-man-pages
 
 bindkey '^ ' autosuggest-execute

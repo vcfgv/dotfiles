@@ -41,9 +41,9 @@ function setup_env() {
     # export ZDOTDIR=$XDG_CONFIG_HOME/zsh
 
     # Custom zsh completions path
-#     export GENCOMP_DIR=$XDG_CONFIG_HOME/zsh/completions
-#     export CUSTOM_FPATH="$XDG_CONFIG_HOME/zsh/completions"
-#     export fpath=($fpath $CUSTOM_FPATH)
+    export GENCOMP_DIR=$XDG_CONFIG_HOME/zsh/completions
+    export CUSTOM_FPATH="$XDG_CONFIG_HOME/zsh/completions"
+    export fpath=($fpath $CUSTOM_FPATH)
 
     # brew completions
 #     if type brew &>/dev/null; then
@@ -64,7 +64,6 @@ function setup_env() {
     # Rust
     # _PATH="$HOME/.cargo/bin:$_PATH"
     # export CARGO_HOME="$HOME/.cargo"
-
 
     ## LS_COLOR
     # coreutils
@@ -94,6 +93,11 @@ function setup_env() {
 
     export _PATH="/usr/local/opt/ncurses/bin:$_PATH"
     export _PATH="/usr/local/opt/gettext/bin:$_PATH"
+
+    # Ruby
+    export _PATH="/usr/local/opt/ruby/bin:$_PATH"
+    # Clangd
+    export _PATH="/usr/local/opt/llvm/bin:$_PATH"
 
     export PATH="$_PATH"
 }
