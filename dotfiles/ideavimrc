@@ -1,9 +1,173 @@
+let mapleader=' '
+nnoremap <SPACE> <Nop>
+
+" set nohlsearch
+set incsearch
+set ignorecase
+set smartcase
+set showmode
+set number
+set relativenumber
+set scrolloff=2
+set history=100000
+set clipboard=unnamed
+set backleader=indent,eol,start
+set nocompatible
+
 set easymotion
+set surround
 set multiple-cursors
 set commentary
-set surround
+set highlightedyank
 
-source $XDG_CONFIG_HOME/nvim/configs/base.vim
-source $XDG_CONFIG_HOME/nvim/configs/mappings.vim
+" COPY PASTE
+nnoremap x "_x
+nnoremap X "_X
+" nnoremap d "_d
+" nnoremap dd "_dd
+nnoremap c "_c
+nnoremap cc "_cc
+nnoremap D "_D
+vnoremap d "_d
+vnoremap dd "_dd
+vnoremap x "_x
+vnoremap X "_X
 
-let g:mapleader = "\<Space>"
+" Save and Quit
+nnoremap <leader>w :write<cr>
+nnoremap <leader>e :q<cr>
+nnoremap <leader>x :wq<cr>
+
+" insert a newline
+inoremap <C-O> <Esc>o
+
+" Smart move
+noremap H ^
+noremap L $
+
+" Easier line-wise movement
+nnoremap gh g^
+nnoremap gl g$
+
+nnoremap J G
+nnoremap K gg
+nnoremap j gj
+nnoremap k gk
+
+vnoremap J G
+vnoremap K gg
+vnoremap j gj
+vnoremap k gk
+
+nnoremap < <<
+nnoremap > >>
+vnoremap < <gv
+vnoremap > >gv
+" Re-select blocks after indenting in visual/select mode
+xnoremap < <gv
+xnoremap > >gv|
+" Indent and jump to first non-blank character linewise
+nmap >>  >>_
+nmap <<  <<_
+" Use tab for indenting in visual/select mode
+xnoremap <Tab> >gv|
+xnoremap <S-Tab> <gv
+
+" Move Lines
+nnoremap <S-Up> :m-2<CR>
+nnoremap <S-Down> :m+<CR>
+vnoremap <S-Up> :m'<-2<CR>gv=gv
+vnoremap <S-Down> :m'>+<CR>gv=gv
+inoremap <S-Up> <Esc>:m-2<CR>
+inoremap <S-Down> <Esc>:m+<CR>
+
+" Add Lines, Work like 5[<Space>
+nnoremap [<space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>
+nnoremap ]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
+" Start new line from any cursor position in insert-mode
+inoremap <S-Return> <C-o>o
+
+" Duplicate lines
+nnoremap <leader>d m`YP``
+vnoremap <leader>d YPgv
+" Duplicate paragraph
+nnoremap <leader>cp yap<S-}>p
+
+" Yank to end
+nnoremap Y y$
+" Yank buffer's relative/absolute path to clipboard
+nnoremap <leader>y :let @+=expand("%:~:.")<CR>:echo 'Yanked relative path'<CR>
+nnoremap <leader>Y :let @+=expand("%:p")<CR>:echo 'Yanked absolute path'<CR>
+
+" nohl
+nnoremap <Esc><Esc> :silent! nohls<cr>
+
+" Insert mode shortcut
+inoremap <C-h> <Left>
+inoremap <C-j> <Down>
+inoremap <C-k> <Up>
+inoremap <C-l> <Right>
+inoremap <C-a> <Home>
+inoremap <C-e> <End>
+inoremap <C-d> <Delete>
+
+" Quit insert, visual mode
+inoremap jk <Esc>
+vnoremap v <Esc>
+
+" Redo
+nnoremap U <C-r>
+
+" Tab operation
+nnoremap tn gt
+nnoremap tp gT
+
+" EasyMotion
+map <leader> <Plug>(easymotion-prefix)
+" <Leader>f{char} to move to {char}
+map <leader>f <Plug>(easymotion-bd-f)
+" S{char}{char} to move to {char}{char}
+map <leader>S <Plug>(easymotion-bd-f2)
+" Move to line
+map <leader>l <Plug>(easymotion-bd-jk)
+" Move to word
+map <leader>W <Plug>(easymotion-bd-w)
+
+" ==================================================
+" Show all the provided actions via `:actionlist`
+" ==================================================
+nnoremap <leader>cl :action CommentByLineComment<CR>
+nnoremap <leader>bb :action ToggleLineBreakpoint<CR>
+nnoremap <leader>br :action ViewBreakpoints<CR>
+nnoremap <leader>cv :action ChangeView<CR>
+nnoremap <leader>cd :action ChooseDebugConfiguration<CR>
+
+nnoremap ga :action GotoAction<CR>
+nnoremap gc :action GotoClass<CR>
+nnoremap <leader>gd :action GotoDeclaration<CR>
+nnoremap <leader>gi :action GotoImplementation<CR>
+nnoremap gs :action GotoSymbol<CR>
+nnoremap <leader>gt :action GotoTest<CR>
+nnoremap <leader>mj :action MethodDown<CR>
+nnoremap <leader>mk :action MethodUp<CR>
+nnoremap gf :action Forward<CR>
+nnoremap gb :action Back<CR>
+nnoremap <leader>fp :action ShowFilePath<CR>
+nnoremap <leader>fu :action FindUsages<CR>
+nnoremap <leader>ic :action InspectCode<CR>
+nnoremap <leader>sl :action ActivateStructureToolWindow<CR>
+nnoremap <leader>oi :action OptimizeImports<CR>
+nnoremap <leader>pm :action ShowPopupMenu<CR>
+nnoremap <leader>rc :action ChooseRunConfiguration<CR>
+nnoremap <leader>re :action RenameElement<CR>
+nnoremap <leader>rf :action RenameFile<CR>
+nnoremap <leader>se :action SearchEverywhere<CR>
+nnoremap <leader>su :action ShowUsages<CR>
+nnoremap <leader>tc  :action CloseActiveTab<CR>
+nnoremap <leader>tl Vy<CR>:action ActivateTerminalToolWindow<CR>
+vnoremap <leader>tl y<CR>:action ActivateTerminalToolWindow<CR>
+
+set clipboard+=ideaputset
+set clipboard+=ideajoin
+set clipboard+=ideaput
+set ideajoin
