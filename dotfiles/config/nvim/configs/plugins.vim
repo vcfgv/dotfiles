@@ -67,14 +67,15 @@ Plug 'jeffkreeftmeijer/vim-numbertoggle'
 " }}} numbertoggle "
 
 " Quick Motion Search {{{ "
+Plug 'rhysd/clever-f.vim'
 " You can specify any mapping for Sneak (see :help sneak). 
 " By the way: cl is equivalent to s, and cc is equivalent to S.
-Plug 'justinmk/vim-sneak'
+" Plug 'justinmk/vim-sneak'
 " Replacing f & t
-map f <Plug>Sneak_f
-map F <Plug>Sneak_F
-map t <Plug>Sneak_t
-map T <Plug>Sneak_T
+" map f <Plug>Sneak_f
+" map F <Plug>Sneak_F
+" map t <Plug>Sneak_t
+" map T <Plug>Sneak_T
 " Plug 'andymass/vim-matchup'
 Plug 'easymotion/vim-easymotion'
 let g:EasyMotion_prompt = 'Jump to → '
