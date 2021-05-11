@@ -48,6 +48,7 @@ abbr gco='git checkout'
 abbr gst='git status'
 # abbr gs='git stash'
 abbr gsp='git stash pop'
+abbr gcs='git commit -S'
 
 # Docker
 abbr dps='docker ps'
