@@ -39,9 +39,12 @@ YSU_MESSAGE_POSITION="after"
 YSU_MESSAGE_FORMAT="$(tput setaf 1)Hey! I found this %alias_type for %command: %alias$(tput sgr0)"
 
 # Z.lua
-_ZL_ECHO=1  # display new directory name after cd
-_ZL_MATCH_MODE=1  # enhanced matching
-_ZL_ADD_ONCE=1  # only add path if the $PWD is changed
+# _ZL_ECHO=1  # display new directory name after cd
+# _ZL_MATCH_MODE=1  # enhanced matching
+# _ZL_ADD_ONCE=1  # only add path if the $PWD is changed
+
+# ZSHZ
+ZSHZ_ECHO=1
 
 # Vi Mode
 # Mode-sensitive cursor styling
@@ -63,9 +66,9 @@ MODE_INDICATOR_VLINE='%F{12}<%F{4}V-LINE<%f'
 # plugins
 zinit light-mode for \
     olets/zsh-abbr \
-    skywind3000/z.lua \
+    agkozak/zsh-z \
     softmoth/zsh-vim-mode
-#     agkozak/zsh-z \
+#     skywind3000/z.lua \
 
 zinit wait="2" lucid light-mode for \
     MichaelAquilina/zsh-you-should-use \
