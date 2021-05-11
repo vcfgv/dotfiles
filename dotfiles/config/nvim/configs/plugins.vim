@@ -950,8 +950,8 @@ Plug 'honza/vim-snippets'
 
 " gutentags {{{ "
 Plug 'ludovicchabant/vim-gutentags'
-" Plug 'skywind3000/gutentags_plus'
-" Plug 'skywind3000/vim-preview'
+Plug 'skywind3000/gutentags_plus'
+Plug 'skywind3000/vim-preview'
 " let g:gutentags_trace = 1
 let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
 let g:gutentags_ctags_tagfile = '.tags'
@@ -967,13 +967,13 @@ endif
 if executable('ctags')
 	let g:gutentags_modules += ['ctags']
 endif
-let s:vim_tags = $DATA_PATH . '/tags'
+let s:vim_tags = expand('~/.cache/tags')
 " creat if not exist
 if !isdirectory(s:vim_tags)
    silent! call mkdir(s:vim_tags, 'p')
 endif
 let g:gutentags_cache_dir = s:vim_tags
-
+" ctags arguments
 let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
 let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
 let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
@@ -983,29 +983,20 @@ let g:gutentags_ctags_exclude = ['*.json', '*.js', '*.ts', '*.jsx', '*.css', '*.
 let g:gutentags_auto_add_gtags_cscope = 0
 " change focus to quickfix window after search (optional).
 " let g:gutentags_plus_switch = 1
-" gtags-cscope
-"s：查找C代码符号
-"g：查找本定义
-"c：查找调用本函数的函数
-"t：查找本字符串
-"e：查找本egrep模式
-"f：查找本文件
-"i：查找包含本文件的文件
-"d：查找本函数调用的函数
-" let g:gutentags_plus_nomap = 1
-" noremap <silent> <c-\>s :GscopeFind s <C-R><C-W><cr>
-" noremap <silent> <c-\>g :GscopeFind g <C-R><C-W><cr>
-" noremap <silent> <c-\>c :GscopeFind c <C-R><C-W><cr>
-" noremap <silent> <c-\>t :GscopeFind t <C-R><C-W><cr>
-" noremap <silent> <c-\>e :GscopeFind e <C-R><C-W><cr>
-" noremap <silent> <c-\>f :GscopeFind f <C-R>=expand("<cfile>")<cr><cr>
-" noremap <silent> <c-\>i :GscopeFind i <C-R>=expand("<cfile>")<cr><cr>
-" noremap <silent> <c-\>d :GscopeFind d <C-R><C-W><cr>
-" noremap <silent> <c-\>a :GscopeFind a <C-R><C-W><cr>
+noremap <silent> <leader>gs :GscopeFind s <C-R><C-W><cr>
+noremap <silent> <leader>gg :GscopeFind g <C-R><C-W><cr>
+noremap <silent> <leader>gc :GscopeFind c <C-R><C-W><cr>
+noremap <silent> <leader>gt :GscopeFind t <C-R><C-W><cr>
+noremap <silent> <leader>ge :GscopeFind e <C-R><C-W><cr>
+noremap <silent> <leader>gf :GscopeFind f <C-R>=expand("<cfile>")<cr><cr>
+noremap <silent> <leader>gi :GscopeFind i <C-R>=expand("<cfile>")<cr><cr>
+noremap <silent> <leader>gd :GscopeFind d <C-R><C-W><cr>
+noremap <silent> <leader>ga :GscopeFind a <C-R><C-W><cr>
+noremap <silent> <leader>gz :GscopeFind z <C-R><C-W><cr>
 
-" " preview
-" autocmd FileType qf nnoremap <silent><buffer> p :PreviewQuickfix<cr>
-" autocmd FileType qf nnoremap <silent><buffer> P :PreviewClose<cr>
+" preview
+autocmd FileType qf nnoremap <silent><buffer> p :PreviewQuickfix<cr>
+autocmd FileType qf nnoremap <silent><buffer> P :PreviewClose<cr>
 " }}} gutentags "
 
 " tagbar {{{ "
@@ -1013,22 +1004,22 @@ Plug 'liuchengxu/vista.vim' , {'on': ['Vista', 'Vista!','Vista!!']}
 nmap - :Vista!!<cr>
 nnoremap <leader>vf :Vista finder<CR>
 " Note: this option only works the LSP executives, doesn't work for `:Vista ctags`.
-" let g:vista_default_executive = 'ctags'
+let g:vista_default_executive = 'ctags'
 let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
 let g:vista#renderer#enable_icon = 1
 let g:vista_sidebar_width = 35
 let g:vista_echo_cursor_strategy = 'floating_win'
 let g:vista_vimwiki_executive = 'markdown'
 let g:vista_executive_for = {
-  \ 'vimwiki': 'markdown',
-  \ 'pandoc': 'markdown',
-  \ 'markdown': 'toc',
-  \ }
+ \ 'vimwiki': 'markdown',
+ \ 'pandoc': 'markdown',
+ \ 'markdown': 'toc',
+ \ }
 let g:vista_fzf_preview = ['right:50%']
 let g:vista#renderer#icons = {
-     \   "function": "",
-     \   "variable": "",
-     \  }
+    \   "function": "",
+    \   "variable": "",
+    \  }
 " }}} tagbar "
 
 "  vim-clap {{{
