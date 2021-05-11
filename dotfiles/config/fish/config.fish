@@ -12,4 +12,8 @@ set -g fish_emoji_width 2
 
 source $XDG_CONFIG_HOME/fish/aliases.fish
 
+for mode in insert default visual
+    bind -M $mode -k nul accept-autosuggestion execute
+end
+
 starship init fish | source
