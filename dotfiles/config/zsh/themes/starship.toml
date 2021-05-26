@@ -9,8 +9,11 @@ success_symbol = "[➜](bold green)"
 error_symbol = "[✗](bold red)"
 vicmd_symbol = "[](bold green)"
 
+[conda]
+symbol = " "
+format = "[$symbol$environment](green) "
+
 [cmd_duration]
-disabled = false
 min_time = 2000
 format = "took [$duration]($style)"
 style = "yellow"
@@ -61,11 +64,6 @@ disabled = false
 
 [line_break]
 disabled = false
-
-[python]
-symbol = " "
-pyenv_version_name = true
-pyenv_prefix = "pyenv "
 
 [ruby]
 symbol = " "
