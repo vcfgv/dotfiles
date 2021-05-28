@@ -20,14 +20,11 @@ FZF_FILE_HIGHLIGHTER='cat'
 (( $+commands[bat]       )) && FZF_FILE_HIGHLIGHTER='bat --color=always'
 export FZF_FILE_HIGHLIGHTER
 
-FZF_DIR_HIGHLIGHTER='ls -l --color=always'
+FZF_DIR_HIGHLIGHTER='ls -Gl --color=always'
 (( $+commands[tree] )) && FZF_DIR_HIGHLIGHTER='tree -CtrL2'
 (( $+commands[lsd]  )) && FZF_DIR_HIGHLIGHTER='lsd --color=always --tree --depth=2'
 (( $+commands[exa]  )) && FZF_DIR_HIGHLIGHTER='exa --icons --color=always -TL2'
 export FZF_DIR_HIGHLIGHTER
-
-(( $+commands[iconful] )) && FZF_PATH_LOC='2..' || FZF_PATH_LOC=''
-export FZF_PATH_LOC
 
 FZF_DEFAULT_COMMAND='(git ls-tree -r --name-only HEAD ||
          find . -path "*/\.*" -prune -o -type f -print -o -type l -print | sed s/^..//) 2> /dev/null'
@@ -37,23 +34,25 @@ export FZF_DEFAULT_COMMAND
 
 FZF_DEFAULT_OPTS="
 --border
---pointer '➤ '
+--cycle
+--extended
+--expect='$continuous_trigger,$print_query'
+--height 80%
+--info inline
+--multi
+--reverse
+--tiebreak=begin
+--delimiter='\x00'
+--pointer '➤'
 --marker '>'
 --prompt '❯ '
 --color=fg:-1,bg:-1,hl:#ffaf5f,fg+:-1,bg+:-1,hl+:#ffaf5f
 --color=prompt:#5fff87,marker:#ff87d7,spinner:#ff87d7
---info inline
---height 80%
---extended
---ansi
---reverse
---cycle
---multi
---bind ctrl-space:toggle,pgup:preview-up,pgdn:preview-down
 --bind alt-p:preview-up,alt-n:preview-down
---bind ctrl-u:half-page-up
---bind ctrl-d:half-page-down
 --bind alt-a:select-all,ctrl-r:toggle-all
+--bind tab:toggle-out,shift-tab:toggle-in
+--bind ctrl-space:toggle,pgup:preview-up,pgdn:preview-down
+--bind ctrl-u:half-page-up,ctrl-d:half-page-down
 --bind ctrl-s:toggle-sort
 --bind ?:toggle-preview,alt-w:toggle-preview-wrap
 --bind \"ctrl-y:execute-silent(ruby -e 'puts ARGV' {+} | pbcopy)+abort\"
@@ -66,15 +65,14 @@ export FZF_DEFAULT_OPTS
 
 # FZF: Ctrl - T
 FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-(( $+commands[iconful] )) && FZF_CTRL_T_COMMAND="$FZF_CTRL_T_COMMAND | iconful -f"
 export FZF_CTRL_T_COMMAND
 
 FZF_CTRL_T_OPTS="
---preview \"($FZF_FILE_HIGHLIGHTER {$FZF_PATH_LOC} || $FZF_DIR_HIGHLIGHTER {$FZF_PATH_LOC}) 2>/dev/null | head -200\"
---bind 'enter:execute(echo {$FZF_PATH_LOC})+abort'
---bind 'alt-e:execute($EDITOR {$FZF_PATH_LOC} >/dev/tty </dev/tty)'
---bind \"ctrl-y:execute-silent(ruby -e 'puts ARGV' {+$FZF_PATH_LOC} | pbcopy)+abort\"
---preview-window right:50%
+--preview \"($FZF_FILE_HIGHLIGHTER {} || $FZF_DIR_HIGHLIGHTER {}) 2>/dev/null | head -200\"
+--bind 'enter:execute(echo {})+abort'
+--bind 'alt-e:execute($EDITOR {} >/dev/tty </dev/tty)'
+--bind \"ctrl-y:execute-silent(ruby -e 'puts ARGV' {+} | pbcopy)+abort\"
+--preview-window right:50%:nohidden
 --select-1
 --exit-0
 "
@@ -99,26 +97,45 @@ FZF_ALT_C_COMMAND="command find -L . -mindepth 1 \
     -prune -o -type d -print 2> /dev/null | cut -b3-"
 (( $+commands[fd]      )) && FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git 2>/dev/null'
 (( $+commands[blsd]    )) && FZF_ALT_C_COMMAND='blsd $dir | grep -v "^\.$"'
-(( $+commands[iconful] )) && FZF_ALT_C_COMMAND="$FZF_ALT_C_COMMAND | iconful -d"
 export FZF_ALT_C_COMMAND
 
 FZF_ALT_C_OPTS="
 --exit-0
---bind 'enter:execute(echo {$FZF_PATH_LOC})+abort'
---preview '($FZF_DIR_HIGHLIGHTER {$FZF_PATH_LOC}) | head -200 2>/dev/null'
+--bind 'enter:execute(echo {})+abort'
+--preview '($FZF_DIR_HIGHLIGHTER {}) | head -200 2>/dev/null'
 --preview-window=right:50%
 "
 export FZF_ALT_C_OPTS
 
-# FZF: Alt - E
-FZF_ALT_E_COMMAND="$FZF_DEFAULT_COMMAND"
-(( $+commands[iconful] )) && FZF_ALT_E_COMMAND="$FZF_ALT_E_COMMAND | iconful -f"
-# export FZF_ALT_E_COMMAND
-
-FZF_ALT_E_OPTS="
---preview \"($FZF_FILE_HIGHLIGHTER {$FZF_PATH_LOC} || $FZF_DIR_HIGHLIGHTER {$FZF_PATH_LOC}) 2>/dev/null | head -200\"
---bind 'alt-e:execute($EDITOR {$FZF_PATH_LOC} >/dev/tty </dev/tty)'
---bind \"ctrl-y:execute-silent(ruby -e 'puts ARGV' {+$FZF_PATH_LOC} | pbcopy)+abort\"
---preview-window right:50%
-"
-# export FZF_ALT_E_OPTS
+#######################################################################
+#                             FZF_TAB                                 #
+#######################################################################
+zstyle ':fzf-tab:*' fzf-command fzf
+# disable sort when completing options of any command
+zstyle ':completion:complete:*:options' sort false
+zstyle ':fzf-tab:complete:_zlua:*' query-string input
+zstyle ':completion:*:descriptions' format '[%d]'
+zstyle ':fzf-tab:*' show-group full
+# zstyle ':fzf-tab:*' show-group brief
+zstyle ':fzf-tab:*' continuous-trigger '/'
+zstyle ':fzf-tab:*' print-query alt-enter
+zstyle ':fzf-tab:*' ignore false
+zstyle ':fzf-tab:*' single-group color header
+export FZF_TAB_GROUP_COLORS=(
+$'\033[94m' $'\033[32m' $'\033[33m' $'\033[35m' $'\033[31m' $'\033[38;5;27m' $'\033[36m' \
+  $'\033[38;5;100m' $'\033[38;5;98m' $'\033[91m' $'\033[38;5;80m' $'\033[92m' \
+  $'\033[38;5;214m' $'\033[38;5;165m' $'\033[38;5;124m' $'\033[38;5;120m'
+)
+zstyle ':fzf-tab:*' group-colors $FZF_TAB_GROUP_COLORS
+zstyle ':fzf-tab:*' fzf-flags --bind tab:toggle-out,shift-tab:toggle-in --height 80%
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ":completion:*:git-checkout:*" sort false
+zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm,cmd -w -w"
+zstyle ':fzf-tab:complete:(kill|ps):argument-rest' fzf-preview '[[ $group == "[process ID]" ]] && ps --pid=$word -o cmd --no-headers -w -w'
+zstyle ':fzf-tab:complete:(kill|ps):argument-rest' fzf-flags --preview-window=down:3:wrap
+zstyle ':completion:*:exa' file-sort modification
+zstyle ':completion:*:exa' sort false
+zstyle ":fzf-tab:complete:cd:*" query-string
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa --icons --color=always -TL2 $realpath'
+zstyle ':fzf-tab:complete:cd:*' popup-pad 30 0
+# zstyle ':fzf-tab:complete:cd:*' fzf-flags --preview-window=right:50%:nohidden

@@ -121,8 +121,8 @@ inoremap <C-a> <Home>
 " 删除但不保存到剪切板
 nnoremap x "_x
 nnoremap X "_X
-" nnoremap d "_d
-" nnoremap dd "_dd
+nnoremap d "_d
+nnoremap dd "_dd
 nnoremap c "_c
 nnoremap cc "_cc
 nnoremap D "_D
@@ -150,18 +150,18 @@ nmap <C-w>[ :vertical resize -3<CR>
 nmap <C-w>] :vertical resize +3<CR>
 
 " Switch Tab with leader
-noremap <silent><leader>1 1gt<cr>
-noremap <silent><leader>2 2gt<cr>
-noremap <silent><leader>3 3gt<cr>
-noremap <silent><leader>4 4gt<cr>
-noremap <silent><leader>5 5gt<cr>
-noremap <silent><leader>6 6gt<cr>
-noremap <silent><leader>7 7gt<cr>
-noremap <silent><leader>8 8gt<cr>
-noremap <silent><leader>9 9gt<cr>
-noremap <silent><leader>0 10gt<cr>
+noremap <silent><leader>1 1gt<CR>
+noremap <silent><leader>2 2gt<CR>
+noremap <silent><leader>3 3gt<CR>
+noremap <silent><leader>4 4gt<CR>
+noremap <silent><leader>5 5gt<CR>
+noremap <silent><leader>6 6gt<CR>
+noremap <silent><leader>7 7gt<CR>
+noremap <silent><leader>8 8gt<CR>
+noremap <silent><leader>9 9gt<CR>
+noremap <silent><leader>0 10gt<CR>
 
-" Improve scroll, credits: https://github.com/Shougo
+" Improve sCRoll, CRedits: https://github.com/Shougo
 nnoremap <expr> zz (winline() == (winheight(0)+1) / 2) ?
 	\ 'zt' : (winline() == 1) ? 'zb' : 'zz'
 noremap <expr> <C-f> max([winheight(0) - 2, 1])
@@ -193,14 +193,14 @@ noremap <m-y> d$
 inoremap <m-y> <c-\><c-o>d$
 
 " Save Buffer
-nnoremap <Leader>w :write<CR>
-xnoremap <Leader>w <Esc>:write<CR>
+nnoremap <leader>w :write<CR>
+xnoremap <leader>w <Esc>:write<CR>
 nnoremap <C-s> :<C-u>write<CR>
 xnoremap <C-s> :<C-u>write<CR>
 cnoremap <C-s> <C-u>write<CR>
 inoremap <C-Q> <esc>:wq<CR>
 nnoremap <leader>bc :BufOnly<CR>
-nnoremap <Leader>bo :BufOnly
+nnoremap <leader>bo :BufOnly 
 " Switch Buffer
 nnoremap  ]b :bp<CR>
 nnoremap  [b :bn<CR>
@@ -208,7 +208,7 @@ nnoremap  [b :bn<CR>
 " nnoremap <C-x> :bd<CR>
 nnoremap <leader>bd :bd<CR>
 
-"insert a newline
+" insert a newline
 inoremap <C-O> <Esc>o
 
 " Switch File
@@ -264,8 +264,13 @@ nnoremap zs :<C-u>mkview<CR>
 nnoremap zl :<C-u>loadview<CR>
 
 " Exchange Lines, work like 2]e
-nnoremap [e  :<c-u>execute 'move -1-'. v:count1<cr>
-nnoremap ]e  :<c-u>execute 'move +'. v:count1<cr>
+nnoremap [e  :<c-u>execute 'move -1-'. v:count1<CR>
+nnoremap ]e  :<c-u>execute 'move +'. v:count1<CR>
+" Add Lines, Work like 5[<Space>
+nnoremap [<space>  :<c-u>put! =repeat(nr2char(10), v:count1)<CR>
+nnoremap ]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<CR>
+" Start new line from any cursor position in insert-mode
+inoremap <S-Return> <C-o>o
 
 " Move Lines
 nnoremap <S-Up> :m-2<CR>
@@ -275,29 +280,32 @@ vnoremap <S-Down> :m'>+<CR>gv=gv
 inoremap <S-Up> <Esc>:m-2<CR>
 inoremap <S-Down> <Esc>:m+<CR>
 
-" Add Lines, Work like 5[<Space>
-nnoremap [<space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>
-nnoremap ]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
-" Start new line from any cursor position in insert-mode
-inoremap <S-Return> <C-o>o
+"]<End> or ]<Home> move current line to the end or the begin of current buffer
+nnoremap <silent>]<End> ddGp``
+nnoremap <silent>]<Home> ddggP``
+vnoremap <silent>]<End> dGp``
+vnoremap <silent>]<Home> dggP``
 
 " Duplicate lines
-nnoremap <Leader>d m`YP``
-vnoremap <Leader>d YPgv
+nnoremap <leader>d m`YP``
+vnoremap <leader>d YPgv
 " Duplicate paragraph
-nnoremap <Leader>cp yap<S-}>p
+nnoremap <leader>cp yap<S-}>p
 
-" Tabline operation
-nmap <leader>tn :tabnew<cr>
+" Tab operation
+nmap <leader>tn :tabnew<CR>
 nmap <leader>te :tabedit
-nmap <leader>tc :tabclose<cr>
+nmap <leader>tc :tabclose<CR>
 nmap <leader>tm :tabmove
+
+nnoremap tn gt
+nnoremap tp gT
 
 " Yank to end
 nnoremap Y y$
 " Yank buffer's relative/absolute path to clipboard
-nnoremap <Leader>y :let @+=expand("%:~:.")<CR>:echo 'Yanked relative path'<CR>
-nnoremap <Leader>Y :let @+=expand("%:p")<CR>:echo 'Yanked absolute path'<CR>
+nnoremap <leader>y :let @+=expand("%:~:.")<CR>:echo 'Yanked relative path'<CR>
+nnoremap <leader>Y :let @+=expand("%:p")<CR>:echo 'Yanked absolute path'<CR>
 
 " Indent and jump to first non-blank character linewise
 nmap >>  >>_
@@ -312,7 +320,7 @@ xnoremap <Tab> >gv|
 xnoremap <S-Tab> <gv
 
 " nohl
-nnoremap <Esc><Esc> :silent! nohls<cr>
+nnoremap <Esc><Esc> :silent! nohls<CR>
 
 " Remove spaces at the end of lines
 nnoremap <leader>cw :<C-u>silent! keeppatterns %substitute/\s\+$//e<CR>
@@ -328,8 +336,10 @@ cnoremap <C-h> <BS>
 cnoremap <C-t> <C-R>=expand("%:p:h") . "/" <CR>
 
 " Quit
-noremap <leader>e :q<cr>
-noremap <leader>x :wq<cr>
+noremap <leader>e :q<CR>
+noremap <leader>x :wq<CR>
+
+nnoremap <silent> <leader>rc :source $MYVIMRC<CR>
 
 call plug#begin('~/.vim/plugged')
 
