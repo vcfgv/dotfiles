@@ -1,90 +1,71 @@
-# auto-expanding abbreviations, inspired by fish shell
-# change directory
-abbr ..='cd ..'
-abbr ...='cd ../..'
-abbr ....='cd ../../..'
-abbr .....='cd ../../../..'
-abbr cd.='cd ..'
-abbr cd..='cd ..'
-
+abbr ..="cd .."
+abbr ...="cd ../.."
+abbr ....="cd ../../.."
+abbr .....="cd ../../../.."
+abbr bcuay="brew cu -ay"
+abbr bcubc="brew cask reinstall \$(brew cask outdated) && brew cleanup"
+abbr bcubo="brew update && brew cask outdated"
+abbr brewp="brew pin"
+abbr brews="brew list -1"
+abbr brewsp="brew list --pinned"
+abbr bubc="brew upgrade && brew cleanup"
+abbr bubo="brew update && brew outdated"
+abbr bubu="bubo && bubc"
+abbr cd.="cd .."
+abbr cd..="cd .."
 abbr cht="cht.sh"
-
-# enhanced ls
-abbr ll='ls -lgbh --git'
-abbr lg='ll -G'
-abbr llg='ll -G'
-abbr la='ls -a'
-abbr lla='ll -a'
-abbr lag='llg -a'
-abbr ldot='ll -d .*'
-abbr lss='ll -s size'
-abbr lst='ll -s modified'
-abbr lt='ls --tree'
-
-# run interactively
-abbr rm='rm -iv'
-abbr rmrf='rm -ivrf'
-abbr mv='mv -iv'
-abbr rd='rmdir'
-abbr md='mkdir -v -p'
-abbr df='df -h'
-abbr dus='du -sh'
-
-# z.lua
-abbr zz='z -c'
-abbr zi='z -i'
-abbr zf='z -I'
-abbr zb='z -b'
-
-# $OMZ:git/git.plugin.zsh
-abbr gc='git commit -v'
-abbr gb='git branch'
-abbr gl='git pull'
-abbr gp='git push'
-abbr gpom='git push origin master'
-abbr gpoat='git push origin --all && git push origin --tags'
-abbr gpu='git push upstream'
-abbr gco='git checkout'
-abbr gst='git status'
-# abbr gs='git stash'
-abbr gsp='git stash pop'
-abbr gcs='git commit -S'
-
-# Docker
-abbr dps='docker ps'
-abbr dpsa='dps -a'
-abbr drun='docker run'
-abbr drm='docker rm'
-abbr drmi='docker rmi'
-abbr da='docker attach'
-abbr dim='docker images'
-abbr dp='docker pull'
-abbr dstop='docker stop'
-abbr dstart='docker start'
-abbr dexec='docker exec'
-abbr ds='docker service'
-abbr dm='docker-machine'
-
-# TMUX
-abbr ta='tmux attach -t'
-abbr tad='tmux attach -d -t'
-abbr ts='tmux new-session -s'
-abbr tl='tmux list-sessions'
-abbr tksv='tmux kill-server'
-abbr tkss='tmux kill-session -t'
-# Tmuxinator
-abbr txs='tmuxinator start'
-abbr txo='tmuxinator open'
-abbr txn='tmuxinator new'
-abbr txl='tmuxinator list'
-
-# Brew
-abbr brewp='brew pin'
-abbr brews='brew list -1'
-abbr brewsp='brew list --pinned'
-abbr bubo='brew update && brew outdated'
-abbr bubc='brew upgrade && brew cleanup'
-abbr bubu='bubo && bubc'
-abbr bcubo='brew update && brew cask outdated'
-abbr bcubc='brew cask reinstall $(brew cask outdated) && brew cleanup'
-abbr bcuay='brew cu -ay'
+abbr da="docker attach"
+abbr dexec="docker exec"
+abbr df="df -h"
+abbr dim="docker images"
+abbr dm="docker-machine"
+abbr dp="docker pull"
+abbr dps="docker ps"
+abbr dpsa="dps -a"
+abbr drm="docker rm"
+abbr drmi="docker rmi"
+abbr drun="docker run"
+abbr ds="docker service"
+abbr dstart="docker start"
+abbr dstop="docker stop"
+abbr dus="du -sh"
+abbr gb="git branch"
+abbr gc="git commit -v"
+abbr gco="git checkout"
+abbr gcs="git commit -S"
+abbr gl="git pull"
+abbr gp="git push"
+abbr gpoat="git push origin --all && git push origin --tags"
+abbr gpom="git push origin master"
+abbr gpu="git push upstream"
+abbr gsp="git stash pop"
+abbr gst="git status"
+abbr la="ls -a"
+abbr lag="llg -a"
+abbr ldot="ll -d .*"
+abbr lg="ll -G"
+abbr ll="ls -lgbh --git"
+abbr lla="ll -a"
+abbr llg="ll -G"
+abbr lss="ll -s size"
+abbr lst="ll -s modified"
+abbr lt="ls --tree"
+abbr md="mkdir -v -p"
+abbr mv="mv -iv"
+abbr rd="rmdir"
+abbr rm="rm -iv"
+abbr rmrf="rm -ivrf"
+abbr ta="tmux attach -t"
+abbr tad="tmux attach -d -t"
+abbr tkss="tmux kill-session -t"
+abbr tksv="tmux kill-server"
+abbr tl="tmux list-sessions"
+abbr ts="tmux new-session -s"
+abbr txl="tmuxinator list"
+abbr txn="tmuxinator new"
+abbr txo="tmuxinator open"
+abbr txs="tmuxinator start"
+abbr zb="z -b"
+abbr zf="z -I"
+abbr zi="z -i"
+abbr zz="z -c"

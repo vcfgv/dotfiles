@@ -1,4 +1,5 @@
-#!/usr/bin/env zsh
+#!/bin/zsh
+
 alias vim="/Applications/MacVim.app/Contents/MacOS/Vim"
 (( $+commands[nvim] )) && alias vi="nvim"
 alias vv='vi $(fzf)'
@@ -107,3 +108,6 @@ alias bubc='brew upgrade && brew cleanup'
 alias bubu='bubo && bubc'
 alias bcubo='brew update && brew cask outdated'
 alias bcubc='brew cask reinstall $(brew cask outdated) && brew cleanup'
+
+# CarbonCopyCloner
+alias ccc='/Applications/Carbon\ Copy\ Cloner.app/Contents/MacOS/ccc'
