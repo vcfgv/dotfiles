@@ -1126,9 +1126,9 @@ Plug 'pangloss/vim-javascript',         { 'for': 'javascript' }
 " Plug 'tpope/vim-bundler',               { 'for': 'ruby'       }
 " Plug 'tpope/vim-rake',                  { 'for': 'ruby'       }
 " Plug 'jgdavey/vim-blockle',             { 'for': 'ruby'       }| let g:blockle_mapping = '<leader>B'
-" Plug 'stephpy/vim-yaml',                { 'for': 'yaml'       }
+Plug 'stephpy/vim-yaml',                { 'for': 'yaml'       }
 Plug 'lervag/vimtex',                    { 'for': 'tex'   }
-Plug 'zinit-zsh/zinit-vim-syntax',       { 'for': 'zshrc' }
+" Plug 'zinit-zsh/zinit-vim-syntax',       { 'for': 'zshrc' }
 Plug 'vim-python/python-syntax',         { 'for': 'python'    }
 Plug 'dag/vim-fish',                     { 'for': 'fish'  }
 Plug 'MTDL9/vim-log-highlighting',       { 'for': 'log'   }
@@ -1589,7 +1589,7 @@ endfunction
 " }}} Status line "
 
 " ColorScheme {{{ "
-Plug 'nightsense/snow'
+" Plug 'nightsense/snow'
 let g:snow_background = 'dark'
 Plug 'junegunn/seoul256.vim'
 let g:seoul256_background = 235
@@ -1644,7 +1644,7 @@ call defx#custom#option('_', {
 " coc.nvim setup {{{
 " color for cursor holding highlight
 hi default CocHighlightText guibg=#8a8a8a guifg=#211F1C
-hi default CocHighlightText ctermbg=#8a8a8a ctermfg=#211F1C
+" hi default CocHighlightText ctermbg=#8a8a8a ctermfg=#211F1C
 
 " color for coc-diagnostic
 hi link CocErrorSign Error
