@@ -14,13 +14,11 @@ function setup_env() {
         # export OSVER=$(uname -r)
     # fi
 
-    # export PATH everywhere takes too long time
-    export PATH="$HOME/bin:$HOME/.local/bin:/usr/local/bin:/usr/local/sbin:/usr/sbin:/usr/bin:/usr/games:/usr/local/games:/bin:/sbin"
-
     # Editor
     # For Terminal
-    # export EDITOR="${commands[vim]:-$EDITOR}"
-    export EDITOR="${commands[nvim]:-$EDITOR}"
+    export EDITOR="${commands[vim]:-$EDITOR}"
+    # export EDITOR="${commands[nvim]:-$EDITOR}"
+    export EDITOR=nvim
     export CVSEDITOR="${EDITOR}"
     export GIT_EDITOR="${EDITOR}"
     # For GUI
@@ -47,19 +45,13 @@ function setup_env() {
     # Homebrew Bottles中科大源
     # export HOMEBREW_BOTTLE_DOMAIN="https://mirrors.ustc.edu.cn/homebrew-bottles"
     export HOMEBREW_NO_AUTO_UPDATE=true
+    # export HOMEBREW_CASK_OPTS=--no-quarantine
 
     # Language
     export LANGUAGE="en_US.UTF-8"
     export LANG="${LANGUAGE}"
     export LC_ALL="${LANGUAGE}"
     export LC_CTYPE="${LANGUAGE}"
-
-    # Rust
-    # PATH="$HOME/.cargo/bin:$PATH"
-    # export CARGO_HOME="$HOME/.cargo"
-
-    # LS_COLOR coreutils
-    export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
 
     # https://github.com/ogham/exa/blob/adfee28fb9bb6f491c822ba4506fafef03909945/Vagrantfile#L163
     export LS_COLORS="di=34:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=30;43"
@@ -78,20 +70,6 @@ function setup_env() {
 
     # dotdrop
     export DOTDROP_CONFIG="$HOME/Dropbox/my-dotfiles/config.yaml"
-
-    # GPG
-    export GPG_TTY=$(tty)
-
-    export PATH="/opt/homebrew/opt/ncurses/bin:$PATH"
-    export PATH="/opt/homebrew/opt/gettext/bin:$PATH"
-
-    # Ruby
-    export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
-    # Clangd
-    export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
-    # Homebrew
-    export PATH="/opt/homebrew/bin:$PATH"
-    export fpath=($(brew --prefix)/share/zsh/site-functions $fpath)
 }
 
 setup_history() {
