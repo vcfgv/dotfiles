@@ -6,7 +6,6 @@ if (( $+commands[vivid] )); then
     (( $+commands[exa] )) && export EXA_COLORS="$(vivid --color-mode 8-bit generate molokai)"
 fi
 
-
 # combine z & cd
 function j() {
     if [[ "$argv[1]" == "-"* ]]; then

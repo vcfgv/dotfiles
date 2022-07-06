@@ -10,9 +10,10 @@ export NVM_LAZY_LOAD=true
 export NVM_LAZY_LOAD_EXTRA_COMMANDS=('nvim')
 
 ### Start of Zinit's installer chunk
-source "$HOME/.zinit/bin/zinit.zsh"
-# autoload -Uz _zinit
-#  (( ${+_comps} )) && _comps[zinit]=_zinit
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+source "${ZINIT_HOME}/zinit.zsh"
+autoload -Uz _zinit
+ (( ${+_comps} )) && _comps[zinit]=_zinit
 
 # ZSH_AUTOSUGGEST
 # "ctrl + →" doing the forward-word, and "→" getting to the end of prompt line
@@ -121,9 +122,9 @@ done
 [ -f ~/.iterm2_shell_integration.zsh ] && source ~/.iterm2_shell_integration.zsh
 
 zinit light-mode for \
+    zdharma-continuum/fast-syntax-highlighting \
     Aloxaf/fzf-tab \
     zsh-users/zsh-autosuggestions \
-    zdharma-continuum/fast-syntax-highlighting \
     OMZP::colored-man-pages
 
 bindkey '^ ' autosuggest-execute
