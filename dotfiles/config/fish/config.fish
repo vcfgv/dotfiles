@@ -21,4 +21,4 @@ for mode in insert default visual
     bind -M $mode -k nul accept-autosuggestion execute
 end
 
-starship init fish | source
+# starship init fish | source
