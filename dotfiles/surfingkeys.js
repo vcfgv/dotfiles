@@ -1,27 +1,28 @@
 const {
-    aceVimMap,
-    mapkey,
-    imap,
-    imapkey,
-    getClickableElements,
-    vmapkey,
-    map,
-    unmap,
-    cmap,
-    addSearchAlias,
-    removeSearchAlias,
-    tabOpenLink,
-    readText,
-    Clipboard,
-    Front,
-    Hints,
-    Visual,
-    RUNTIME
+  aceVimMap,
+  mapkey,
+  imap,
+  imapkey,
+  getClickableElements,
+  vmapkey,
+  map,
+  unmap,
+  unmapAllExcept,
+  cmap,
+  addSearchAlias,
+  removeSearchAlias,
+  tabOpenLink,
+  readText,
+  Clipboard,
+  Front,
+  Hints,
+  Visual,
+  RUNTIME
 } = api;
 
 // an example to create a new mapping `ctrl-y`
-mapkey('<Ctrl-y>', 'Show me the money', function() {
-    Front.showPopup('a well-known phrase uttered by characters in the 1996 film Jerry Maguire (Escape to close).');
+mapkey('<Ctrl-y>', 'Show me the money', function () {
+  Front.showPopup('a well-known phrase uttered by characters in the 1996 film Jerry Maguire (Escape to close).');
 });
 
 // an example to replace `T` with `gt`, click `Default mappings` to see how `T` works.
@@ -30,12 +31,14 @@ map('gt', 'T');
 // an example to remove mapkey `Ctrl-i`
 unmap('<Ctrl-i>');
 
+unmapAllExcept(['u', 'd', 'r'], /read.readwise.io/);
+
 // map to vimum
 map('u', 'e');
-mapkey('p', "Open the clipboard's URL in the current tab", function() {
-    Front.getContentFromClipboard(function(response) {
-        window.location.href = response.data;
-    });
+mapkey('p', "Open the clipboard's URL in the current tab", function () {
+  Front.getContentFromClipboard(function (response) {
+    window.location.href = response.data;
+  });
 });
 map('P', 'cc');
 map('gi', 'i');
@@ -81,7 +84,7 @@ addSearchAlias(
       res = JSON.parse(response.text).result.map(function (it) {
         return it[0]
       })
-    } catch (e) {}
+    } catch (e) { }
     return res
   }
 )
@@ -107,6 +110,11 @@ function _getCurrentTabMarkdown(doCleanup) {
   // Alfred Forum 页的标题精简
   if (urlHost.includes('www.alfredforum.com')) {
     title = title.replace('- Discussion & Help - Alfred App Community Forum', '')
+  }
+
+  // BiliBili 页精简标题和 URL
+  if (urlHost.includes('www.bilibili.com')) {
+    title = title.replace('_哔哩哔哩_bilibili', '')
   }
 
   // Zhihu 页的标题精简掉私信、消息提示文字
