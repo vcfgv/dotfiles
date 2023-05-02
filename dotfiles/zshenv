@@ -1,102 +1,55 @@
 #!/bin/zsh
 
-function setup_env() {
-    # Get os info
-    # if (( $+commands[lsb_release] )); then
-        # export OSNAME=$(lsb_release -si)
-        # export OSVER=$(lsb_release -sr)
-    # elif [ -f /etc/lsb-release ]; then
-        # source /etc/lsb-release
-        # export OSNAME=$DISTRIB_ID
-        # export OSVER=$DISTRIB_RELEASE
-    # else
-        # export OSNAME=$(uname -s)
-        # export OSVER=$(uname -r)
-    # fi
+# Editor
+# export EDITOR="${commands[nvim]:-$EDITOR}"
+export EDITOR=nvim
+export CVSEDITOR="${EDITOR}"
+export GIT_EDITOR="${EDITOR}"
+# For GUI
+export VISUAL="${EDITOR}"
 
-    # Editor
-    # For Terminal
-    export EDITOR="${commands[vim]:-$EDITOR}"
-    # export EDITOR="${commands[nvim]:-$EDITOR}"
-    export EDITOR=nvim
-    export CVSEDITOR="${EDITOR}"
-    export GIT_EDITOR="${EDITOR}"
-    # For GUI
-    export VISUAL="${EDITOR}"
+# True color
+export COLORTERM=truecolor
 
-    # True color
-    export COLORTERM=truecolor
+# Word split
+export WORDCHARS=''
+export DIRSTACKSIZE=100
 
-    # Word split
-    export WORDCHARS=''
-    export DIRSTACKSIZE=100
+# XDG PATHS
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_DATA_HOME="$HOME/.local/share"
+# export ZDOTDIR=$XDG_CONFIG_HOME/zsh
 
-    # XDG PATHS
-    export XDG_CONFIG_HOME="$HOME/.config"
-    export XDG_CACHE_HOME="$HOME/.cache"
-    export XDG_DATA_HOME="$HOME/.local/share"
-    # export ZDOTDIR=$XDG_CONFIG_HOME/zsh
+# Custom zsh completions path
+export GENCOMP_DIR=$XDG_CONFIG_HOME/zsh/completions
+export CUSTOM_FPATH="$XDG_CONFIG_HOME/zsh/completions"
+export fpath=($fpath $CUSTOM_FPATH)
 
-    # Custom zsh completions path
-    export GENCOMP_DIR=$XDG_CONFIG_HOME/zsh/completions
-    export CUSTOM_FPATH="$XDG_CONFIG_HOME/zsh/completions"
-    export fpath=($fpath $CUSTOM_FPATH)
+# Homebrew
+export HOMEBREW_NO_AUTO_UPDATE=true
+# export HOMEBREW_CASK_OPTS=--no-quarantine
 
-    # Homebrew Bottles中科大源
-    # export HOMEBREW_BOTTLE_DOMAIN="https://mirrors.ustc.edu.cn/homebrew-bottles"
-    export HOMEBREW_NO_AUTO_UPDATE=true
-    # export HOMEBREW_CASK_OPTS=--no-quarantine
+# Language
+export LANGUAGE="en_US.UTF-8"
+export LANG="${LANGUAGE}"
+export LC_ALL="${LANGUAGE}"
+export LC_CTYPE="${LANGUAGE}"
 
-    # Language
-    export LANGUAGE="en_US.UTF-8"
-    export LANG="${LANGUAGE}"
-    export LC_ALL="${LANGUAGE}"
-    export LC_CTYPE="${LANGUAGE}"
+# https://github.com/ogham/exa/blob/adfee28fb9bb6f491c822ba4506fafef03909945/Vagrantfile#L163
+export LS_COLORS="di=34:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=30;43"
 
-    # https://github.com/ogham/exa/blob/adfee28fb9bb6f491c822ba4506fafef03909945/Vagrantfile#L163
-    export LS_COLORS="di=34:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=30;43"
+# ipython
+export IPYTHONDIR="$XDG_CONFIG_HOME/ipython"
 
-    # ipython
-    export IPYTHONDIR="$XDG_CONFIG_HOME/ipython"
+# jupyter
+export JUPYTER_CONFIG_DIR="$XDG_CONFIG_HOME/jupyter"
 
-    # jupyter
-    export JUPYTER_CONFIG_DIR="$XDG_CONFIG_HOME/jupyter"
+# bat
+export BAT_CONFIG_PATH="$XDG_CONFIG_HOME/bat/config"
 
-    # bat
-    export BAT_CONFIG_PATH="$XDG_CONFIG_HOME/bat/config"
+# starship
+export STARSHIP_CONFIG="$XDG_CONFIG_HOME/zsh/themes/starship.toml"
 
-    # starship
-    export STARSHIP_CONFIG="$XDG_CONFIG_HOME/zsh/themes/starship.toml"
-
-    # dotdrop
-    export DOTDROP_CONFIG="$HOME/Dropbox/my-dotfiles/config.yaml"
-}
-
-setup_history() {
-#     export HISTFILE="$ZDOTDIR/.zsh_history" # History file
-#     export HISTSIZE=100000                  # History size in memory
-#     export SAVEHIST=1000000                 # The number of histsize
-#     export LISTMAX=50                       # The size of asking history
-# 
-#     # 首先移除重复历史
-#     setopt HIST_EXPIRE_DUPS_FIRST
-#     # 忽略重复
-#     setopt HIST_IGNORE_DUPS
-#     # 更佳性能
-#     setopt HIST_FCNTL_LOCK
-#     # 记录时间戳
-#     # setopt EXTENDED_HISTORY              # Write the history file in the ":start:elapsed;command" format.
-#     # 按执行顺序添加历史
-#     setopt INC_APPEND_HISTORY            # Write to the history file immediately, not when the shell exits.
-#     # 忽略空格开头的命令
-#     setopt HIST_IGNORE_SPACE             # Do not record an entry starting with a space.
-#     setopt HIST_REDUCE_BLANKS            # Remove superfluous blanks before recording entry.
-#     # 展开历史时不执行
-#     setopt HIST_VERIFY                   # Do not execute immediately upon history expansion.
-#     setopt HIST_BEEP                     # Beep when accessing nonexistent history.
-#     # Do not add in root
-#     [[ "$UID" == 0 ]] && unset HISTFILE && SAVEHIST=0
-}
-
-setup_env; unset -f setup_env
-# setup_history; unset -f setup_history
+# dotdrop
+export DOTDROP_CONFIG="$HOME/Dropbox/my-dotfiles/config.yaml"
